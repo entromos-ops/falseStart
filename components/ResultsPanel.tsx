@@ -69,7 +69,7 @@ export default function ResultsPanel({
           <strong>{result.trueHits} / 9</strong>
         </div>
         <div>
-          <span>Fakeouts</span>
+          <span>Decoys</span>
           <strong>{result.fakeoutResists} / 5</strong>
         </div>
         <div>

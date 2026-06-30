@@ -290,7 +290,7 @@ export default function GameShell() {
             </p>
             <div className="countdown-number">{countdown || "GO"}</div>
             <p className="countdown-copy">
-              Tap on STRIKE. Ignore FAKEOUT.
+              Tap on STRIKE. Ignore DECOY.
             </p>
           </div>
         ) : null}

@@ -56,7 +56,7 @@ export default function Lobby({
         </div>
         <h1>False Start</h1>
         <p>
-          Tap the real signal. Do not flinch on fakeouts. Everyone gets the
+          Tap the real signal. Do not flinch on decoys. Everyone gets the
           same sequence. You get two attempts.
         </p>
       </header>

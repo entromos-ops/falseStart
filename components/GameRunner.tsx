@@ -10,6 +10,12 @@ type GameRunnerProps = {
   onComplete: (actions: PlayerAction[]) => void;
 };
 
+type TapFeedback = {
+  eventIndex: number;
+  kind: "registered" | "flinch";
+  expiresAtMs: number;
+};
+
 function getCurrentEvent(events: ChallengeEvent[], elapsedMs: number) {
   return events.find((event) => elapsedMs < event.feedbackEndMs) ?? null;
 }
@@ -33,6 +39,7 @@ function getPhase(event: ChallengeEvent | null, elapsedMs: number) {
 export default function GameRunner({ events, mode, onComplete }: GameRunnerProps) {
   const [elapsedMs, setElapsedMs] = useState(0);
   const [tapCount, setTapCount] = useState(0);
+  const [tapFeedback, setTapFeedback] = useState<TapFeedback | null>(null);
   const startRef = useRef(0);
   const actionsRef = useRef<PlayerAction[]>([]);
   const completedRef = useRef(false);
@@ -40,6 +47,12 @@ export default function GameRunner({ events, mode, onComplete }: GameRunnerProps
   const currentEvent = getCurrentEvent(events, elapsedMs);
   const phase = getPhase(currentEvent, elapsedMs);
   const currentIndex = currentEvent?.index ?? events.length - 1;
+  const activeTapFeedback =
+    currentEvent &&
+    tapFeedback?.eventIndex === currentEvent.index &&
+    elapsedMs <= tapFeedback.expiresAtMs
+      ? tapFeedback
+      : null;
 
   useEffect(() => {
     document.body.classList.add("gameplay-lock");
@@ -87,13 +100,13 @@ export default function GameRunner({ events, mode, onComplete }: GameRunnerProps
     }
 
     if (result.outcome === "hit") {
-      return "HIT";
+      return "LOCKED";
     }
     if (result.outcome === "miss") {
       return "TOO SLOW";
     }
     if (result.outcome === "fakeout_resist") {
-      return "STEADY";
+      return "CLEAR";
     }
 
     return "FLINCHED";
@@ -108,21 +121,55 @@ export default function GameRunner({ events, mode, onComplete }: GameRunnerProps
     }
 
     actionsRef.current = [...actionsRef.current, { tMs }];
+
+    if (currentEvent && phase !== "feedback") {
+      setTapFeedback({
+        eventIndex: currentEvent.index,
+        kind: phase === "strike" ? "registered" : "flinch",
+        expiresAtMs: tMs + 650
+      });
+    }
+
     setTapCount((count) => count + 1);
     navigator.vibrate?.(20);
   }
 
-  const signalText =
-    phase === "strike"
-      ? "STRIKE"
-      : phase === "fakeout"
-        ? "FAKEOUT"
-        : phase === "feedback"
-          ? feedbackLabel ?? "..."
-          : "WAIT";
+  let signalText = "WAIT";
+  let signalSubtext = "Stay ready";
+
+  if (activeTapFeedback?.kind === "registered") {
+    signalText = "LOCKED";
+    signalSubtext = "Tap registered";
+  } else if (activeTapFeedback?.kind === "flinch") {
+    signalText = "FLINCH";
+    signalSubtext = "Wrong tap";
+  } else if (phase === "strike") {
+    signalText = "STRIKE";
+    signalSubtext = "Tap now";
+  } else if (phase === "fakeout") {
+    signalText = "DECOY";
+    signalSubtext = "Don't tap";
+  } else if (phase === "feedback") {
+    signalText = feedbackLabel ?? "...";
+    if (feedbackLabel === "LOCKED") {
+      signalSubtext = "Tap registered";
+    } else if (feedbackLabel === "CLEAR") {
+      signalSubtext = "Stayed off";
+    } else if (feedbackLabel === "FLINCHED") {
+      signalSubtext = "Wrong tap";
+    } else if (feedbackLabel === "TOO SLOW") {
+      signalSubtext = "Missed signal";
+    } else {
+      signalSubtext = "Reset";
+    }
+  }
 
   return (
-    <main className={`game-active phase-${phase}`}>
+    <main
+      className={`game-active phase-${phase}${
+        activeTapFeedback ? ` tap-${activeTapFeedback.kind}` : ""
+      }`}
+    >
       <div className="game-hud">
         <span>{mode === "daily" ? "Daily" : "Practice - not ranked"}</span>
         <strong>
@@ -139,15 +186,7 @@ export default function GameRunner({ events, mode, onComplete }: GameRunnerProps
       >
         <span className="signal-ring" aria-hidden="true" />
         <span className="signal-text">{signalText}</span>
-        <span className="signal-subtext">
-          {phase === "strike"
-            ? "Tap now"
-            : phase === "fakeout"
-              ? "Don't tap"
-              : phase === "feedback"
-                ? "Reset"
-                : "Stay ready"}
-        </span>
+        <span className="signal-subtext">{signalSubtext}</span>
       </button>
 
       <div className="progress-rail" aria-hidden="true">

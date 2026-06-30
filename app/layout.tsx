@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "False Start",
-  description: "Tap the real signal. Do not flinch on fakeouts.",
+  description: "Tap the real signal. Do not flinch on decoys.",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/icon.svg",
