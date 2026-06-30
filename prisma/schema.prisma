@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id          String    @id @default(uuid())
+  displayName String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  attempts    Attempt[]
+}
+
+model Attempt {
+  id               String    @id @default(uuid())
+  playerId         String
+  player           Player    @relation(fields: [playerId], references: [id])
+
+  challengeDate    String
+  challengeVersion Int       @default(1)
+
+  status           String
+  startedAt        DateTime  @default(now())
+  submittedAt      DateTime?
+
+  sequenceHash     String
+
+  score            Int?
+  trueHits         Int?
+  misses           Int?
+  fakeoutResists   Int?
+  falseStarts      Int?
+  avgReactionMs    Float?
+  bestReactionMs   Float?
+  maxStreak        Int?
+
+  suspiciousFlags  Json?
+  rawActions       Json?
+  eventResults     Json?
+
+  @@index([playerId, challengeDate])
+  @@index([challengeDate, score])
+}

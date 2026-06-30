@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="False Start app icon">
+  <rect width="512" height="512" rx="104" fill="#05070b"/>
+  <circle cx="256" cy="256" r="176" fill="#07141a" stroke="#27def2" stroke-width="20"/>
+  <path d="M282 42 139 283h96l-16 187 154-254h-99l8-174Z" fill="#27def2"/>
+  <path d="M256 91a165 165 0 0 1 159 122" fill="none" stroke="#f9c21a" stroke-width="12" stroke-linecap="round"/>
+</svg>
