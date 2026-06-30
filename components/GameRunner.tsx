@@ -24,7 +24,7 @@ function getPhase(event: ChallengeEvent | null, elapsedMs: number) {
   }
 
   if (elapsedMs < event.cueEndMs) {
-    return event.kind === "true_signal" ? "strike" : "hold";
+    return event.kind === "true_signal" ? "strike" : "fakeout";
   }
 
   return "feedback";
@@ -115,8 +115,8 @@ export default function GameRunner({ events, mode, onComplete }: GameRunnerProps
   const signalText =
     phase === "strike"
       ? "STRIKE"
-      : phase === "hold"
-        ? "HOLD"
+      : phase === "fakeout"
+        ? "FAKEOUT"
         : phase === "feedback"
           ? feedbackLabel ?? "..."
           : "WAIT";
@@ -142,8 +142,8 @@ export default function GameRunner({ events, mode, onComplete }: GameRunnerProps
         <span className="signal-subtext">
           {phase === "strike"
             ? "Tap now"
-            : phase === "hold"
-              ? "Hands off"
+            : phase === "fakeout"
+              ? "Don't tap"
               : phase === "feedback"
                 ? "Reset"
                 : "Stay ready"}
