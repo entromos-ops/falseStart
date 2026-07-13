@@ -226,6 +226,7 @@ export default function RealmWorld({
         private currentState = stateRef.current;
         private currentTile = { ...stateRef.current.player };
         private player!: Phaser.GameObjects.Container;
+        private playerLabel!: Phaser.GameObjects.Text;
         private route: TilePoint[] = [];
         private moving = false;
         private pendingEntity: EntityId | null = null;
@@ -393,7 +394,7 @@ export default function RealmWorld({
               padding: { x: 6, y: 3 }
             })
             .setOrigin(0.5)
-            .setDepth(this.depth(point, 7));
+            .setDepth(18000);
         }
 
         private createLandmarks() {
@@ -763,15 +764,16 @@ export default function RealmWorld({
           graphics.fillStyle(0xd99b6c, 1);
           graphics.fillCircle(0, -44, 8);
           this.player.add(graphics);
-          const playerLabel = this.add.text(0, -68, "YOU · TÚ", {
+          this.playerLabel = this.add.text(center.x, center.y - 77, "YOU · TÚ", {
               color: "#274e43",
               fontFamily: "Arial, sans-serif",
               fontSize: "10px",
               fontStyle: "bold",
               backgroundColor: "rgba(250, 242, 209, 0.88)",
               padding: { x: 6, y: 3 }
-            }).setOrigin(0.5);
-          this.player.add(playerLabel);
+            })
+            .setOrigin(0.5)
+            .setDepth(21000);
         }
 
         private createMarkers() {
@@ -857,23 +859,30 @@ export default function RealmWorld({
         };
 
         private nearestReachable(point: TilePoint): TilePoint | null {
-          const candidates = [point];
+          if (isInside(point) && !this.isBlocked(point)) {
+            const directPath = findPath(this.currentTile, point, this.isBlocked);
+            if (directPath.length > 0) return point;
+          }
+
           for (let radius = 1; radius <= 3; radius += 1) {
+            const candidates: TilePoint[] = [];
             for (let dx = -radius; dx <= radius; dx += 1) {
               const dy = radius - Math.abs(dx);
               candidates.push({ x: point.x + dx, y: point.y + dy });
               if (dy !== 0) candidates.push({ x: point.x + dx, y: point.y - dy });
             }
-          }
-          let best: { point: TilePoint; path: TilePoint[] } | null = null;
-          for (const candidate of candidates) {
-            if (!isInside(candidate) || this.isBlocked(candidate)) continue;
-            const path = findPath(this.currentTile, candidate, this.isBlocked);
-            if (path.length > 0 && (!best || path.length < best.path.length)) {
-              best = { point: candidate, path };
+
+            let best: { point: TilePoint; pathLength: number } | null = null;
+            for (const candidate of candidates) {
+              if (!isInside(candidate) || this.isBlocked(candidate)) continue;
+              const path = findPath(this.currentTile, candidate, this.isBlocked);
+              if (path.length > 0 && (!best || path.length < best.pathLength)) {
+                best = { point: candidate, pathLength: path.length };
+              }
             }
+            if (best) return best.point;
           }
-          return best?.point ?? null;
+          return null;
         }
 
         private queueWalk(destination: TilePoint) {
@@ -903,6 +912,7 @@ export default function RealmWorld({
           this.tweens.killTweensOf(this.player);
           const currentPosition = iso(this.currentTile);
           this.player.setPosition(currentPosition.x, currentPosition.y - 9);
+          this.playerLabel.setPosition(currentPosition.x, currentPosition.y - 77);
           this.moving = false;
           const path = findPath(this.currentTile, destination, this.isBlocked);
           this.route = path.slice(1);
@@ -934,6 +944,7 @@ export default function RealmWorld({
             ease: "Sine.easeInOut",
             onUpdate: () => {
               this.player.setDepth(this.depth(next, 10));
+              this.playerLabel.setPosition(this.player.x, this.player.y - 68);
             },
             onComplete: () => {
               this.currentTile = { ...next };
@@ -967,6 +978,7 @@ export default function RealmWorld({
             const position = iso(this.currentTile);
             this.player?.setPosition(position.x, position.y - 9);
             this.player?.setDepth(this.depth(this.currentTile, 10));
+            this.playerLabel?.setPosition(position.x, position.y - 77);
           }
           for (const id of PLOT_IDS) this.drawPlot(id);
           for (const id of TREE_IDS) {
