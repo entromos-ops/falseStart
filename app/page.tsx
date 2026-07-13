@@ -1,5 +1,5 @@
-import GameShell from "@/components/GameShell";
+import LumaVillageGame from "@/components/LumaVillageGame";
 
 export default function Home() {
-  return <GameShell />;
+  return <LumaVillageGame />;
 }

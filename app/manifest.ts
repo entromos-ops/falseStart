@@ -1,20 +1,17 @@
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "False Start",
-    short_name: "False Start",
-    description: "A daily reaction challenge where speed matters and flinching loses.",
+    name: "Luma Village",
+    short_name: "Luma",
+    description: "Build a village. Learn its language.",
     start_url: "/",
     display: "standalone",
-    background_color: "#05070b",
-    theme_color: "#27def2",
-    icons: [
-      {
-        src: "/icon.svg",
-        sizes: "any",
-        type: "image/svg+xml"
-      }
-    ]
+    orientation: "portrait-primary",
+    background_color: "#e9d7aa",
+    theme_color: "#203d32",
+    categories: ["games", "education"]
   };
 }

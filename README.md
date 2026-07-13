@@ -1,41 +1,36 @@
-# False Start
+# Luma Village
 
-A mobile-first daily reaction challenge where everyone gets the same seeded
-sequence and two ranked attempts per day.
+Luma Village is a mobile-first cozy building game where useful Spanish replaces
+English gradually as the player proves they understand it. The repository name
+remains `falseStart`; the old reaction-game product has been fully retired.
+
+The current vertical slice includes a complete first-day loop: meet Alma,
+gather and deliver materials, improve the plaza, shop at the market, respond in
+Spanish, and finish with a transfer task that reuses language in a new context.
+Progress and language support preferences are stored locally on the device.
 
 ## Local Development
 
 ```bash
 npm install
-npm run db:push
 npm run dev
 ```
 
 Open `http://127.0.0.1:3000`.
 
-## Environment
-
-Copy `.env.example` to `.env` and set:
-
-- `DATABASE_URL`: SQLite connection string for local development.
-- `DAILY_CHALLENGE_SECRET`: server-only secret used to derive daily seeds.
-- `SESSION_SECRET`: server-only secret used to sign anonymous player cookies.
-
-The committed `.env` uses development-only secrets for local MVP testing.
-
 ## Scripts
 
 - `npm run dev`: start Next.js locally.
-- `npm run build`: generate Prisma client and build the app.
-- `npm run db:push`: generate Prisma Client and create/update the local SQLite schema.
-- `npm test`: run deterministic generator and scoring tests.
+- `npm run build`: create the static production build in `out/`.
+- `npm run typecheck`: run TypeScript without emitting files.
+- `npm test`: run the pure game-state and progression tests.
 
-## MVP Notes
+## Deployment
 
-Anonymous sessions use a signed HTTP-only cookie. Clearing cookies can bypass
-daily limits, which is acceptable for this MVP; serious ranked play should add
-authentication.
+The app is a static Next.js export with no required environment variables or
+backend services. It is ready for a later Vercel deployment. Device-local saves
+are intentional for this validation build; cloud sync can be added after the
+learning loop is proven.
 
-The local database init path uses `scripts/init-db.mjs` because `prisma db push`
-returned a blank schema-engine error on this Windows setup, while Prisma Client
-generation and runtime queries worked correctly.
+When the public Vercel URL is known, set the optional `NEXT_PUBLIC_SITE_URL`
+build variable so Open Graph and X cards resolve to that production origin.
