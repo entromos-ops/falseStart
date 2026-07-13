@@ -106,6 +106,7 @@ describe("realm engine", () => {
       log: 0,
       seed: 0,
       carrot: 0,
+      bread: 0,
       stew: 0,
       axe: 1,
       "watering-can": 1
@@ -118,6 +119,27 @@ describe("realm engine", () => {
     expect(JSON.stringify(initial)).toBe(snapshot);
     expect(started).not.toBe(initial);
     expect(started.started).toBe(true);
+  });
+
+  it("carries the Market Day bread reward into the open world", () => {
+    const result = applyRealmAction(
+      createInitialRealm(0),
+      { type: "start", marketDayComplete: true },
+      50
+    );
+
+    expect(result.accepted).toBe(true);
+    expect(result.state.started).toBe(true);
+    expect(result.state.inventory.bread).toBe(1);
+    expect(result.state.inventory.coin).toBe(0);
+    expect(result.state.lastEvent?.message).toContain("market bread");
+
+    const repeated = applyRealmAction(
+      result.state,
+      { type: "start", marketDayComplete: true },
+      60
+    );
+    expect(repeated.state.inventory.bread).toBe(1);
   });
 
   it("treats a wrong morning greeting as a recoverable learning attempt", () => {

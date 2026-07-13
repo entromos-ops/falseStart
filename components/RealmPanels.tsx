@@ -46,6 +46,7 @@ export type RealmPanelsProps = {
   onSpeak: (text: string) => void;
   onSupportChange: (mode: SupportMode) => void;
   onReset: () => void;
+  onShare: () => void;
 };
 
 const OVERLAY_TABS: Array<{
@@ -505,11 +506,13 @@ function PhrasebookPanel({
 function SettingsPanel({
   state,
   onSupportChange,
-  onReset
+  onReset,
+  onShare
 }: {
   state: RealmState;
   onSupportChange: (mode: SupportMode) => void;
   onReset: () => void;
+  onShare: () => void;
 }) {
   const modes: Array<{ id: SupportMode; title: string; copy: string }> = [
     {
@@ -555,6 +558,10 @@ function SettingsPanel({
           Audio only plays when you tap a listen button. Captions remain visible.
         </p>
       </div>
+      <button type="button" className="realm-settings-share" onClick={onShare}>
+        <span><strong>Invite a friend</strong><small>Send them the 60-second Market Day challenge.</small></span>
+        <b aria-hidden="true">↗</b>
+      </button>
       <button type="button" className="realm-reset-button" onClick={onReset}>
         Start this realm again
       </button>
@@ -568,7 +575,8 @@ function RealmOverlay({
   onTabChange,
   onSpeak,
   onSupportChange,
-  onReset
+  onReset,
+  onShare
 }: Pick<
   RealmPanelsProps,
   | "tab"
@@ -577,6 +585,7 @@ function RealmOverlay({
   | "onSpeak"
   | "onSupportChange"
   | "onReset"
+  | "onShare"
 >) {
   useEffect(() => {
     if (!tab) return;
@@ -641,6 +650,7 @@ function RealmOverlay({
               state={state}
               onSupportChange={onSupportChange}
               onReset={onReset}
+              onShare={onShare}
             />
           ) : null}
         </div>
@@ -661,7 +671,8 @@ export default function RealmPanels({
   onTabChange,
   onSpeak,
   onSupportChange,
-  onReset
+  onReset,
+  onShare
 }: RealmPanelsProps) {
   const [englishVisible, setEnglishVisible] = useState(false);
   const quest = currentQuest(state);
@@ -721,9 +732,23 @@ export default function RealmPanels({
               <p>First chapter complete</p>
               <h2>The north road is open.</h2>
               <strong>You built a life here—and used Spanish to do it.</strong>
+              <div className="realm-passport-card">
+                <small>MY SPANISH PASSPORT</small>
+                {REALM_QUESTS.filter((_, index) => [0, 1, 7, 9].includes(index)).map((item) => (
+                  <span key={item.id}><b aria-hidden="true">✓</b>{item.capability}</span>
+                ))}
+              </div>
               <button
                 type="button"
                 className="realm-primary-button"
+                onClick={onShare}
+              >
+                <span><strong>Share my Spanish passport</strong><small>Challenge a friend to Market Day</small></span>
+                <em aria-hidden="true">↗</em>
+              </button>
+              <button
+                type="button"
+                className="realm-secondary-button realm-passport-review"
                 onClick={() => onTabChange("phrases")}
               >
                 Review what you can do
@@ -773,6 +798,7 @@ export default function RealmPanels({
         onSpeak={onSpeak}
         onSupportChange={onSupportChange}
         onReset={onReset}
+        onShare={onShare}
       />
 
       <style jsx>{`
@@ -1320,10 +1346,57 @@ export default function RealmPanels({
         }
 
         :global(.realm-chapter-complete > strong) {
-          margin: 8px 0 18px;
+          margin: 8px 0 14px;
           color: var(--muted);
           font-size: 0.85rem;
           font-weight: 500;
+        }
+
+        :global(.realm-passport-card) {
+          width: 100%;
+          display: grid;
+          gap: 7px;
+          margin-bottom: 12px;
+          padding: 13px;
+          border: 1px solid rgba(47, 107, 82, 0.2);
+          border-radius: 15px 15px 7px 15px;
+          background: rgba(255, 255, 255, 0.52);
+          text-align: left;
+        }
+
+        :global(.realm-passport-card > small) {
+          color: var(--terracotta);
+          font-size: 0.65rem;
+          font-weight: 900;
+          letter-spacing: 0.1em;
+        }
+
+        :global(.realm-passport-card > span) {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: var(--ink);
+          font-size: 0.76rem;
+          font-weight: 750;
+        }
+
+        :global(.realm-passport-card > span b) {
+          display: grid;
+          width: 18px;
+          height: 18px;
+          flex: 0 0 18px;
+          place-items: center;
+          border-radius: 50%;
+          color: #fffdf3;
+          background: var(--green);
+          font-size: 0.65rem;
+        }
+
+        :global(.realm-passport-review) {
+          min-height: 46px;
+          margin-top: 8px;
+          justify-content: center;
+          text-align: center;
         }
 
         :global(.realm-overlay-backdrop) {
@@ -1593,6 +1666,39 @@ export default function RealmPanels({
           margin: 0;
           font-size: 0.78rem;
           line-height: 1.45;
+        }
+
+        :global(.realm-settings-share) {
+          width: 100%;
+          min-height: 58px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          margin-top: 12px;
+          padding: 10px 13px;
+          border: 1px solid rgba(47, 107, 82, 0.25);
+          border-radius: 13px;
+          background: rgba(255, 255, 255, 0.56);
+          color: var(--green-dark);
+          font: inherit;
+          text-align: left;
+          cursor: pointer;
+        }
+
+        :global(.realm-settings-share > span) {
+          display: grid;
+          gap: 2px;
+        }
+
+        :global(.realm-settings-share small) {
+          color: var(--muted);
+          font-size: 0.72rem;
+          font-weight: 500;
+        }
+
+        :global(.realm-settings-share b) {
+          font-size: 1.1rem;
         }
 
         :global(.realm-reset-button) {

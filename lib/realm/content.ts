@@ -195,6 +195,7 @@ export const ITEM_LABELS: Record<
   log: { es: "tronco", en: "log", icon: "▰" },
   seed: { es: "semilla", en: "seed", icon: "◆" },
   carrot: { es: "zanahoria", en: "carrot", icon: "▲" },
+  bread: { es: "pan", en: "bread", icon: "▰" },
   stew: { es: "guiso", en: "stew", icon: "●" },
   axe: { es: "hacha", en: "axe", icon: "⌁" },
   "watering-can": { es: "regadera", en: "watering can", icon: "◒" }

@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { track } from "@vercel/analytics";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ITEM_LABELS, REALM_QUESTS } from "@/lib/realm/content";
 import {
@@ -20,6 +21,7 @@ import type {
   SupportMode,
   TilePoint
 } from "@/lib/realm/types";
+import MarketDayChallenge from "./MarketDayChallenge";
 import RealmPanels, { type RealmPanelTab } from "./RealmPanels";
 
 const RealmWorld = dynamic(() => import("./RealmWorld"), {
@@ -34,6 +36,9 @@ const RealmWorld = dynamic(() => import("./RealmWorld"), {
 
 const SAVE_KEY = "luma-realm:v2";
 const BACKUP_KEY = "luma-realm:v2:backup";
+const SHARE_PATH = "/?challenge=market&utm_source=player_share&utm_medium=referral&utm_campaign=market_day";
+
+type TrackData = Record<string, string | number | boolean | null>;
 
 function feedbackClass(kind: "good" | "soft" | "info") {
   return `realm-toast realm-toast--${kind}`;
@@ -46,6 +51,8 @@ export default function LumaRealmGame() {
   const [selectedEntityId, setSelectedEntityId] = useState<EntityId | null>(null);
   const [tab, setTab] = useState<RealmPanelTab>(null);
   const [now, setNow] = useState(() => Date.now());
+  const [challengeRequested, setChallengeRequested] = useState(false);
+  const [shareNotice, setShareNotice] = useState("");
 
   const quest = currentQuest(state);
   const blend = languageBlendPercent(state);
@@ -59,12 +66,44 @@ export default function LumaRealmGame() {
     setState(next);
   }, []);
 
+  const safeTrack = useCallback((eventName: string, data?: TrackData) => {
+    try {
+      track(eventName, data);
+    } catch {
+      // Analytics must never interrupt the game.
+    }
+  }, []);
+
   const act = useCallback((action: RealmAction) => {
-    const result = applyRealmAction(stateRef.current, action, Date.now());
+    const before = stateRef.current;
+    const beforeQuest = currentQuest(before);
+    const result = applyRealmAction(before, action, Date.now());
     commit(result.state);
+    if (action.type === "start" && result.accepted) {
+      safeTrack("entered_world", {
+        route: action.marketDayComplete ? "market_day" : "direct",
+        support_mode: result.state.supportMode
+      });
+    }
+    if (action.type === "set-support" && result.accepted) {
+      safeTrack("support_changed", { mode: action.mode });
+    }
+    if (
+      result.completedQuest
+      && beforeQuest
+      && (action.type === "choose" || action.type === "perform")
+    ) {
+      safeTrack("quest_completed", {
+        quest: beforeQuest.id,
+        quest_number: before.questIndex + 1
+      });
+    }
+    if (!before.completed && result.state.completed) {
+      safeTrack("chapter_completed", { chapter: "luma_valley" });
+    }
     if (result.completedQuest && "vibrate" in navigator) navigator.vibrate([18, 35, 22]);
     else if (!result.accepted && "vibrate" in navigator) navigator.vibrate(12);
-  }, [commit]);
+  }, [commit, safeTrack]);
 
   useEffect(() => {
     let restored = createInitialRealm();
@@ -78,6 +117,8 @@ export default function LumaRealmGame() {
     stateRef.current = restored;
     setState(restored);
     setNow(Date.now());
+    const params = new URLSearchParams(window.location.search);
+    setChallengeRequested(params.get("challenge") === "market");
     setHydrated(true);
   }, []);
 
@@ -113,6 +154,12 @@ export default function LumaRealmGame() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [tab]);
 
+  useEffect(() => {
+    if (!shareNotice) return;
+    const timer = window.setTimeout(() => setShareNotice(""), 3_500);
+    return () => window.clearTimeout(timer);
+  }, [shareNotice]);
+
   function handleSelectEntity(id: EntityId) {
     setSelectedEntityId(id);
     setTab(null);
@@ -146,6 +193,36 @@ export default function LumaRealmGame() {
     window.speechSynthesis.speak(utterance);
   }
 
+  async function shareGame(surface: "challenge" | "passport" | "settings") {
+    const url = `${window.location.origin}${SHARE_PATH}`;
+    const text = surface === "challenge"
+      ? "I just completed my first Spanish market conversation in Luma Village. Can you?"
+      : "I found a cozy RPG where useful Spanish is part of the world. Try Market Day with me.";
+
+    safeTrack("share_clicked", { surface });
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Luma Village · Market Day", text, url });
+        setShareNotice("Challenge sent. ¡Buena suerte!");
+        return;
+      }
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(`${text} ${url}`);
+        setShareNotice("Challenge link copied.");
+        return;
+      }
+      setShareNotice(`Share this link: ${url}`);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      try {
+        await navigator.clipboard?.writeText(`${text} ${url}`);
+        setShareNotice("Challenge link copied.");
+      } catch {
+        setShareNotice(`Share this link: ${url}`);
+      }
+    }
+  }
+
   function resetProgress() {
     if (!window.confirm("Start over with a new arrival in Luma Valley?")) return;
     const next = createInitialRealm();
@@ -160,43 +237,17 @@ export default function LumaRealmGame() {
     setTab(null);
   }
 
-  if (!hydrated) {
-    return (
-      <main className="realm-boot" aria-label="Loading Luma Village">
-        <span className="realm-loading-rune" aria-hidden="true">L</span>
-        <p>Waking the valley…</p>
-      </main>
-    );
-  }
-
   if (!state.started) {
     return (
-      <main className="realm-intro">
-        <div className="intro-sun" aria-hidden="true" />
-        <div className="intro-landscape" aria-hidden="true">
-          <span className="intro-mountain intro-mountain--one" />
-          <span className="intro-mountain intro-mountain--two" />
-          <span className="intro-house" />
-          <span className="intro-tree intro-tree--one" />
-          <span className="intro-tree intro-tree--two" />
-        </div>
-        <section className="intro-card">
-          <div className="intro-brand"><span>L</span> LUMA VILLAGE</div>
-          <p className="intro-kicker">A language-learning adventure</p>
-          <h1>A world worth<br />learning.</h1>
-          <p className="intro-copy">
-            Build a life in a small open valley. Farm, gather, trade, and learn
-            useful Spanish because the people and places make it matter.
-          </p>
-          <button className="intro-enter" type="button" onClick={() => act({ type: "start" })}>
-            <span>Enter the valley</span><b aria-hidden="true">→</b>
-          </button>
-          <div className="intro-features" aria-label="Game features">
-            <span>Explore freely</span><span>Grow skills</span><span>Learn by doing</span>
-          </div>
-          <p className="intro-save-note">Your adventure saves on this device.</p>
-        </section>
-      </main>
+      <MarketDayChallenge
+        autoStart={hydrated && challengeRequested}
+        shareNotice={shareNotice}
+        onComplete={() => act({ type: "start", marketDayComplete: true })}
+        onSkip={() => act({ type: "start" })}
+        onShare={() => shareGame("challenge")}
+        onSpeak={speak}
+        onTrack={safeTrack}
+      />
     );
   }
 
@@ -267,8 +318,13 @@ export default function LumaRealmGame() {
           onSpeak={speak}
           onSupportChange={handleSupportChange}
           onReset={resetProgress}
+          onShare={() => shareGame("passport")}
         />
       </div>
+
+      {shareNotice ? (
+        <div className="realm-share-toast" role="status">{shareNotice}</div>
+      ) : null}
 
       <span className="realm-build-label" aria-hidden="true">
         CHAPTER {Math.min(REALM_QUESTS.length, state.questIndex + 1)} / {REALM_QUESTS.length}

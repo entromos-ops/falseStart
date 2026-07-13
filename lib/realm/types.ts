@@ -7,6 +7,7 @@ export type ItemId =
   | "log"
   | "seed"
   | "carrot"
+  | "bread"
   | "stew"
   | "axe"
   | "watering-can";
@@ -99,7 +100,7 @@ export type RealmState = {
 };
 
 export type RealmAction =
-  | { type: "start" }
+  | { type: "start"; marketDayComplete?: boolean }
   | { type: "move"; point: TilePoint }
   | { type: "interact"; entityId: EntityId; now?: number }
   | { type: "choose"; choiceId: string; now?: number }

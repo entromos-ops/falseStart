@@ -42,6 +42,7 @@ function emptyInventory(): Record<ItemId, number> {
     log: 0,
     seed: 0,
     carrot: 0,
+    bread: 0,
     stew: 0,
     axe: 1,
     "watering-can": 1
@@ -570,8 +571,21 @@ export function applyRealmAction(
   const next = cloneRealm(refreshRealmState(state, now));
 
   if (action.type === "start") {
+    const enteringForFirstTime = !next.started;
     next.started = true;
-    event(next, "info", "Welcome to the valley", "Tap the ground to walk. Tap people and places to act.", now);
+    if (action.marketDayComplete && enteringForFirstTime) {
+      next.inventory.bread += 1;
+      next.inventory.coin = Math.max(0, next.inventory.coin - 3);
+    }
+    event(
+      next,
+      "info",
+      "Welcome to the valley",
+      action.marketDayComplete
+        ? "Your market bread is in your pack. Tap the ground to walk."
+        : "Tap the ground to walk. Tap people and places to act.",
+      now
+    );
     return result(next, true, false, "Your journey begins.");
   }
   if (action.type === "move") {

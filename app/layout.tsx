@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const metadataBase = new URL(
@@ -7,13 +8,32 @@ const metadataBase = new URL(
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "Luma Village — Learn the language. Live the world.",
+  title: "Learn Practical Spanish in a Cozy RPG | Luma Village",
   description:
-    "A cozy open-world RPG where you farm, gather, trade, and learn useful Spanish by living it.",
+    "Buy breakfast in Spanish in a 60-second playable conversation, then farm, trade, cook, and explore a cozy language-learning RPG.",
+  keywords: [
+    "learn practical Spanish",
+    "Spanish learning game",
+    "cozy language RPG",
+    "Spanish immersion game",
+    "learn Spanish through gameplay"
+  ],
   manifest: "/manifest.webmanifest",
   applicationName: "Luma Village",
+  category: "education",
   alternates: {
     canonical: "/"
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
   },
   appleWebApp: {
     capable: true,
@@ -21,8 +41,9 @@ export const metadata: Metadata = {
     title: "Luma Village"
   },
   openGraph: {
-    title: "Luma Village",
-    description: "Learn the language. Live the world.",
+    title: "Learn Practical Spanish in a Cozy RPG | Luma Village",
+    description:
+      "Handle a useful Spanish market conversation, then farm, trade, cook, and explore while the language becomes part of the world.",
     type: "website",
     url: "/",
     images: [
@@ -36,8 +57,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Luma Village",
-    description: "Learn the language. Live the world.",
+    title: "Learn Practical Spanish in a Cozy RPG | Luma Village",
+    description:
+      "Buy breakfast in Spanish, then learn more by living it in a cozy RPG.",
     images: ["/og.png"]
   }
 };
@@ -59,7 +81,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
