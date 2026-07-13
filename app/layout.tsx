@@ -2,16 +2,19 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 const metadataBase = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://false-start.vercel.app"
 );
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "Luma Village — Build a world in Spanish",
+  title: "Luma Village — Learn the language. Live the world.",
   description:
-    "A cozy village-building game where useful Spanish appears as the world becomes familiar.",
+    "A cozy open-world RPG where you farm, gather, trade, and learn useful Spanish by living it.",
   manifest: "/manifest.webmanifest",
   applicationName: "Luma Village",
+  alternates: {
+    canonical: "/"
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -19,14 +22,22 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Luma Village",
-    description: "Build a village. Learn its language.",
+    description: "Learn the language. Live the world.",
     type: "website",
-    images: ["/og.png"]
+    url: "/",
+    images: [
+      {
+        url: "/og.png",
+        width: 1536,
+        height: 1024,
+        alt: "Luma Village open-world language RPG"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
     title: "Luma Village",
-    description: "Build a village. Learn its language.",
+    description: "Learn the language. Live the world.",
     images: ["/og.png"]
   }
 };
@@ -36,8 +47,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#e9d7aa" },
-    { media: "(prefers-color-scheme: dark)", color: "#203d32" }
+    { media: "(prefers-color-scheme: light)", color: "#d8b96e" },
+    { media: "(prefers-color-scheme: dark)", color: "#14281f" }
   ]
 };
 

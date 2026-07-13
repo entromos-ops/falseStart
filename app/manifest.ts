@@ -6,12 +6,16 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Luma Village",
     short_name: "Luma",
-    description: "Build a village. Learn its language.",
+    description: "Learn the language. Live the world.",
     start_url: "/",
     display: "standalone",
-    orientation: "portrait-primary",
-    background_color: "#e9d7aa",
-    theme_color: "#203d32",
-    categories: ["games", "education"]
+    orientation: "any",
+    background_color: "#d8b96e",
+    theme_color: "#14281f",
+    categories: ["games", "education"],
+    icons: [
+      { src: "/icon", sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: "/icon", sizes: "512x512", type: "image/png", purpose: "maskable" }
+    ]
   };
 }

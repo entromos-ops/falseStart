@@ -1,5 +1,5 @@
-import LumaVillageGame from "@/components/LumaVillageGame";
+import LumaRealmGame from "@/components/LumaRealmGame";
 
 export default function Home() {
-  return <LumaVillageGame />;
+  return <LumaRealmGame />;
 }

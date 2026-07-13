@@ -1,15 +1,26 @@
 # Luma Village
 
-Luma Village is a mobile-first cozy building game where useful Spanish replaces
-English gradually as the player proves they understand it. The repository name
-remains `falseStart`; the old reaction-game product has been fully retired.
+Luma Village is a mobile-first open-world language RPG. It borrows the parts
+that made old-school life-skill games memorable—walking through a real place,
+gathering resources, tending a farm, trading with neighbors, growing visible
+skills, and opening new roads—then makes useful Spanish part of living in that
+world.
 
-The current vertical slice includes a complete first-day loop: meet Alma,
-gather and deliver materials, improve the plaza, shop at the market, respond in
-Spanish, and finish with a transfer task that reuses language in a new context.
-Progress and language support preferences are stored locally on the device.
+The current valley chapter is a complete single-player vertical slice:
 
-## Local Development
+- tap-to-move isometric exploration with keyboard controls on desktop;
+- woodcutting, farming, cooking, and trading XP;
+- persistent inventory, tree respawns, timed crops, and world changes;
+- a ten-part quest chain from first greeting to opening the north road;
+- adaptive Spanish support, pronunciation, safe mistakes, and a phrasebook;
+- device-local saves with a rolling backup;
+- responsive controls designed around phones first.
+
+This is intentionally a focused RPG foundation, not an MMO. Accounts, cloud
+sync, multiplayer, more regions, deeper economies, and long-tail skill content
+can grow from the proven loop instead of being prerequisites for it.
+
+## Local development
 
 ```bash
 npm install
@@ -20,17 +31,19 @@ Open `http://127.0.0.1:3000`.
 
 ## Scripts
 
-- `npm run dev`: start Next.js locally.
-- `npm run build`: create the static production build in `out/`.
-- `npm run typecheck`: run TypeScript without emitting files.
-- `npm test`: run the pure game-state and progression tests.
+- `npm run dev` starts Next.js locally.
+- `npm run build` creates the static production build in `out/`.
+- `npm run typecheck` runs strict TypeScript checks.
+- `npm test` runs the deterministic realm, progression, timer, and save tests.
 
-## Deployment
+## Architecture
 
-The app is a static Next.js export with no required environment variables or
-backend services. It is ready for a later Vercel deployment. Device-local saves
-are intentional for this validation build; cloud sync can be added after the
-learning loop is proven.
+The interface uses Next.js and React, while Phaser renders the isometric world
+and handles pointer, keyboard, camera, and movement input. Realm rules live in a
+pure TypeScript state engine so progression can be tested independently from
+the canvas.
 
-When the public Vercel URL is known, set the optional `NEXT_PUBLIC_SITE_URL`
-build variable so Open Graph and X cards resolve to that production origin.
+The app exports as a static site and needs no environment variables or backend.
+Vercel can deploy it directly from `main`. `NEXT_PUBLIC_SITE_URL` remains an
+optional override for social-card URLs; the checked-in fallback is the live
+Vercel origin.
