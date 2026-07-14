@@ -214,9 +214,9 @@ export default function CalendarPlanner() {
       <nav className="calendar-tool-nav" aria-label="Main navigation">
         <a href="/" className="brand brand--compact">
           <span className="brand-mark" aria-hidden="true"><i /></span>
-          <span>Hearthfolio</span>
+          <span>Yearkeep</span>
         </a>
-        <a href="/" className="calendar-tool-nav-link">Open Hearthfolio <span aria-hidden="true">→</span></a>
+        <a href="/" className="calendar-tool-nav-link">Open Yearkeep <span aria-hidden="true">→</span></a>
       </nav>
 
       <header className="calendar-tool-hero">
@@ -348,8 +348,8 @@ export default function CalendarPlanner() {
           <div className="calendar-result-top">
             <div>
               <div className="calendar-result-brand">
-                <span aria-hidden="true">H</span>
-                <strong>HEARTHFOLIO</strong>
+                <span aria-hidden="true">Y</span>
+                <strong>YEARKEEP</strong>
               </div>
               <p>180-DAY HOMESCHOOL PLAN</p>
             </div>
@@ -494,18 +494,18 @@ export default function CalendarPlanner() {
 
       <section className="calendar-tool-cta">
         <div>
-          <p className="eyebrow">A calendar is the plan. Hearthfolio keeps the record.</p>
+          <p className="eyebrow">A calendar is the plan. Yearkeep keeps the record.</p>
           <h2>Turn ordinary learning days into a portfolio you can actually use.</h2>
         </div>
         <a href="/" className="primary-button primary-button--large">
-          See how Hearthfolio works <span aria-hidden="true">→</span>
+          See how Yearkeep works <span aria-hidden="true">→</span>
         </a>
       </section>
 
       <footer className="calendar-tool-footer">
         <a href="/" className="brand brand--compact">
           <span className="brand-mark" aria-hidden="true"><i /></span>
-          <span>Hearthfolio</span>
+          <span>Yearkeep</span>
         </a>
         <p>Private homeschool records, without the paperwork.</p>
         <nav aria-label="Legal">

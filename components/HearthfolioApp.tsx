@@ -95,7 +95,7 @@ function Brand({ compact = false }: { compact?: boolean }) {
   return (
     <span className={compact ? "brand brand--compact" : "brand"}>
       <span className="brand-mark" aria-hidden="true"><i /></span>
-      <span>Hearthfolio</span>
+      <span>Yearkeep</span>
     </span>
   );
 }
@@ -117,7 +117,7 @@ function Landing({ onStart }: { onStart: () => void }) {
           <p className="eyebrow">Private homeschool records</p>
           <h1>Keep the year.<br />Lose the paperwork.</h1>
           <p className="hero-lede">
-            Log learning in about 20 seconds. Hearthfolio turns ordinary days
+            Log learning in about 20 seconds. Yearkeep turns ordinary days
             into a clear learning record and a warm end-of-year portfolio.
           </p>
           <div className="hero-actions">
@@ -135,7 +135,7 @@ function Landing({ onStart }: { onStart: () => void }) {
           </div>
         </div>
 
-        <div className="hero-product" aria-label="Hearthfolio product preview">
+        <div className="hero-product" aria-label="Yearkeep product preview">
           <div className="preview-window">
             <div className="preview-topbar">
               <Brand compact />
@@ -172,7 +172,7 @@ function Landing({ onStart }: { onStart: () => void }) {
         <div className="section-heading">
           <p className="eyebrow">Small on purpose</p>
           <h2>A record keeper, not another curriculum.</h2>
-          <p>Hearthfolio stays out of the school day and quietly does the paperwork afterward.</p>
+          <p>Yearkeep stays out of the school day and quietly does the paperwork afterward.</p>
         </div>
         <div className="value-grid">
           <article>
@@ -204,7 +204,7 @@ function Landing({ onStart }: { onStart: () => void }) {
           <button className="primary-button" onClick={onStart}>Start with one learner</button>
         </div>
         <div className="sample-paper" aria-label="Sample learning report">
-          <div className="paper-brand"><span>H</span> HEARTHFOLIO</div>
+          <div className="paper-brand"><span>Y</span> YEARKEEP</div>
           <p className="paper-kicker">2026–2027 LEARNING RECORD</p>
           <h3>Maya’s year<br />at a glance</h3>
           <p className="paper-summary">Maya logged learning across eight subject areas. Science and Language Arts appeared most often, with hands-on projects woven throughout the year.</p>
@@ -220,7 +220,7 @@ function Landing({ onStart }: { onStart: () => void }) {
             <span>Math <i style={{ width: "62%" }} /></span>
             <span>Life Skills <i style={{ width: "45%" }} /></span>
           </div>
-          <small>Sample data · Hearthfolio organizes records; it does not determine legal compliance.</small>
+          <small>Sample data · Yearkeep organizes records; it does not determine legal compliance.</small>
         </div>
       </section>
 
@@ -231,7 +231,7 @@ function Landing({ onStart }: { onStart: () => void }) {
           <p>No ads. No monthly billing. No child account. Your existing records stay readable if you stop paying.</p>
         </div>
         <div className="pricing-card">
-          <p>HEARTHFOLIO PRO</p>
+          <p>YEARKEEP PRO</p>
           <div className="price"><strong>$12</strong><span>per household<br />billed yearly</span></div>
           <ul>
             <li>Unlimited journal entries</li>
@@ -273,7 +273,7 @@ function Onboarding({ onClose, onComplete }: {
         <Brand />
         <p className="step-label">A 30-second setup</p>
         <h2 id="setup-title">Who are you keeping records for?</h2>
-        <p>Use a first name, initials, or a nickname. Hearthfolio does not need identifying details.</p>
+        <p>Use a first name, initials, or a nickname. Yearkeep does not need identifying details.</p>
         <form onSubmit={submit}>
           <label>
             <span>First name or nickname</span>
@@ -511,10 +511,10 @@ function ReportView({ state, learnerId, isPro, onUpgrade }: {
         <div><p>Built from the journal</p><h1>Learning record</h1></div>
         <button className="primary-button desktop-action" onClick={print}>{isPro ? "Print / save PDF" : "Unlock print — $12/year"}</button>
       </header>
-      <div className="report-note"><span>Live preview</span><p>This report updates as you log. Hearthfolio describes your records; it does not assess mastery or determine legal compliance.</p></div>
+      <div className="report-note"><span>Live preview</span><p>This report updates as you log. Yearkeep describes your records; it does not assess mastery or determine legal compliance.</p></div>
       <article className="report-paper">
         <header className="report-cover">
-          <div className="report-brand"><span>H</span> HEARTHFOLIO</div>
+          <div className="report-brand"><span>Y</span> YEARKEEP</div>
           <p>{year.label} · LEARNING RECORD</p>
           <h2>{learner.name}’s learning year</h2>
           {learner.gradeLabel && <h3>{learner.gradeLabel}</h3>}
@@ -533,7 +533,7 @@ function ReportView({ state, learnerId, isPro, onUpgrade }: {
         <section className="report-section">
           <div className="report-section-heading"><span>01</span><div><p>LEARNING DAYS</p><h3>Year at a glance</h3></div></div>
           <AttendanceCalendar start={year.startDate} end={year.endDate} activeDates={new Set(dates)} />
-          <p className="report-caption">A filled date means it was explicitly counted as a learning day in Hearthfolio.</p>
+          <p className="report-caption">A filled date means it was explicitly counted as a learning day in Yearkeep.</p>
         </section>
 
         <section className="report-section">
@@ -556,7 +556,7 @@ function ReportView({ state, learnerId, isPro, onUpgrade }: {
           })}
           {!activities.length && <p className="report-placeholder">Journal entries will collect here throughout the year.</p>}
         </section>
-        <footer className="report-footer">Generated from records kept in Hearthfolio · Private homeschool records</footer>
+        <footer className="report-footer">Generated from records kept in Yearkeep · Private homeschool records</footer>
       </article>
       <div className="mobile-report-action"><button className="primary-button primary-button--full" onClick={print}>{isPro ? "Print / save PDF" : "Unlock reports — $12/year"}</button></div>
     </div>
@@ -609,11 +609,11 @@ function SettingsView({ state, setState, isPro, entitlement, onUpgrade, onDeacti
   };
 
   const backup = () => {
-    downloadText(`hearthfolio-backup-${todayLocal()}.json`, createBackup(state), "application/json");
+    downloadText(`yearkeep-backup-${todayLocal()}.json`, createBackup(state), "application/json");
     track("Backup downloaded");
   };
   const exportCsv = () => {
-    downloadText(`hearthfolio-journal-${todayLocal()}.csv`, activitiesCsv(state, { schoolYearId: year.id }), "text/csv;charset=utf-8");
+    downloadText(`yearkeep-journal-${todayLocal()}.csv`, activitiesCsv(state, { schoolYearId: year.id }), "text/csv;charset=utf-8");
     track("CSV exported");
   };
 
@@ -635,7 +635,7 @@ function SettingsView({ state, setState, isPro, entitlement, onUpgrade, onDeacti
           <label><span>Starts</span><input type="date" value={year.startDate} onChange={(event) => updateYear("startDate", event.target.value)} /></label>
           <label><span>Ends</span><input type="date" value={year.endDate} onChange={(event) => updateYear("endDate", event.target.value)} /></label>
         </div>
-        <p className="legal-helper">Set the target that fits your household. Hearthfolio does not interpret state or local requirements.</p>
+        <p className="legal-helper">Set the target that fits your household. Yearkeep does not interpret state or local requirements.</p>
         <button className="secondary-button new-year-button" onClick={newSchoolYear}>{isPro ? "Start another school year" : "Yearly archives · Pro"}</button>
       </section>
 
@@ -647,11 +647,11 @@ function SettingsView({ state, setState, isPro, entitlement, onUpgrade, onDeacti
           <button onClick={() => fileRef.current?.click()}><span><strong>Restore from a backup</strong><small>Replaces the records in this browser</small></span><b>↑</b></button>
           <input ref={fileRef} type="file" accept="application/json,.json" onChange={onRestore} hidden />
         </div>
-        <div className="privacy-warning"><strong>Keep a backup somewhere safe.</strong><p>Clearing browser data, losing this device, or switching browsers can erase local records. Hearthfolio does not provide cloud sync.</p></div>
+        <div className="privacy-warning"><strong>Keep a backup somewhere safe.</strong><p>Clearing browser data, losing this device, or switching browsers can erase local records. Yearkeep does not provide cloud sync.</p></div>
       </section>
 
       <section className="settings-card plan-card">
-        <div className="settings-heading"><div><p className="eyebrow">Plan</p><h2>{isPro ? "Hearthfolio Pro" : "Hearthfolio Free"}</h2></div><span className={isPro ? "plan-pill plan-pill--pro" : "plan-pill"}>{isPro ? "Active" : `${state.activities.length}/${FREE_ENTRY_LIMIT} entries`}</span></div>
+        <div className="settings-heading"><div><p className="eyebrow">Plan</p><h2>{isPro ? "Yearkeep Pro" : "Yearkeep Free"}</h2></div><span className={isPro ? "plan-pill plan-pill--pro" : "plan-pill"}>{isPro ? "Active" : `${state.activities.length}/${FREE_ENTRY_LIMIT} entries`}</span></div>
         {isPro ? (
           <><p>This browser is licensed for unlimited entries, up to six learners, school-year archives, and printable reports.</p><button className="secondary-button" onClick={onDeactivate}>Deactivate this browser</button></>
         ) : (
@@ -662,7 +662,7 @@ function SettingsView({ state, setState, isPro, entitlement, onUpgrade, onDeacti
 
       <section className="settings-card privacy-card">
         <div className="settings-heading"><div><p className="eyebrow">Privacy, plainly</p><h2>Learning records stay local</h2></div></div>
-        <p>Learner names, notes, subjects, and report contents are stored in this browser and are not uploaded to Hearthfolio. We may collect anonymous page and feature usage. License checks send the key and a device label—not learning records.</p>
+        <p>Learner names, notes, subjects, and report contents are stored in this browser and are not uploaded to Yearkeep. We may collect anonymous page and feature usage. License checks send the key and a device label—not learning records.</p>
         <div><a href="/privacy">Read privacy details</a><a href="/terms">Terms of use</a></div>
       </section>
     </div>
@@ -754,7 +754,7 @@ function UpgradeModal({ onClose, entitlement, onActivated }: {
     setBusy(true);
     setError("");
     try {
-      const deviceName = `Hearthfolio on ${navigator.platform || "this browser"}`;
+      const deviceName = `Yearkeep on ${navigator.platform || "this browser"}`;
       const result = await activateLicense(key, deviceName);
       onActivated(result);
       track("License activated");
@@ -769,7 +769,7 @@ function UpgradeModal({ onClose, entitlement, onActivated }: {
     <div className="modal-backdrop" role="presentation" onMouseDown={onClose}>
       <section className="upgrade-modal" role="dialog" aria-modal="true" aria-labelledby="upgrade-title" onMouseDown={(event) => event.stopPropagation()}>
         <button className="close-button" onClick={onClose} aria-label="Close">×</button>
-        <p className="eyebrow">Hearthfolio Pro</p>
+        <p className="eyebrow">Yearkeep Pro</p>
         <h2 id="upgrade-title">Keep the record without rationing entries.</h2>
         <p>One household. One simple annual price. No ads, surprise tiers, or monthly billing.</p>
         <div className="upgrade-price"><strong>$12</strong><span>per year<br />for the household</span></div>
@@ -779,7 +779,7 @@ function UpgradeModal({ onClose, entitlement, onActivated }: {
           <li><i>✓</i> Print or save polished reports</li>
           <li><i>✓</i> Keep and revisit each school year</li>
         </ul>
-        {configured ? <button className="primary-button primary-button--full" onClick={buy}>Get Hearthfolio Pro — $12/year</button> : <button className="primary-button primary-button--full" disabled>Founding access opens shortly</button>}
+        {configured ? <button className="primary-button primary-button--full" onClick={buy}>Get Yearkeep Pro — $12/year</button> : <button className="primary-button primary-button--full" disabled>Founding access opens shortly</button>}
         {!configured && <p className="sales-note">The free product is ready now. Checkout will appear here when the founding plan opens.</p>}
         {!entitlement && <form className="license-form" onSubmit={activate}><label><span>Already have a license key?</span><div><input type="password" value={key} onChange={(event) => setKey(event.target.value)} placeholder="Paste your license key" autoComplete="off" disabled={!configured} /><button disabled={busy || !key.trim() || !configured}>{busy ? "Checking…" : "Activate"}</button></div></label>{error && <p role="alert">{error}</p>}</form>}
         <small>Your learning records remain in this browser. A license unlocks features; it does not add cloud storage.</small>
@@ -848,7 +848,7 @@ function AppShell({ initialState }: { initialState: HearthfolioState }) {
     localStorage.setItem(LICENSE_STORAGE_KEY, JSON.stringify(next));
     setEntitlement(next);
     setUpgradeOpen(false);
-    setToast("Hearthfolio Pro is active.");
+    setToast("Yearkeep Pro is active.");
   };
   const deactivate = async () => {
     if (!entitlement || !window.confirm("Deactivate Pro on this browser? Your records will remain.")) return;
@@ -867,7 +867,7 @@ function AppShell({ initialState }: { initialState: HearthfolioState }) {
     try {
       const text = await file.text();
       const restored = parseBackup(text);
-      if (!window.confirm("Replace this browser’s Hearthfolio records with the selected backup?")) return;
+      if (!window.confirm("Replace this browser’s Yearkeep records with the selected backup?")) return;
       localStorage.setItem("hearthfolio:pre-restore-backup", createBackup(state));
       setState(restored);
       setLearnerId(restored.learners[0]?.id ?? "");
@@ -918,7 +918,7 @@ function AppShell({ initialState }: { initialState: HearthfolioState }) {
   );
 }
 
-export default function HearthfolioApp() {
+export default function YearkeepApp() {
   const [hydrated, setHydrated] = useState(false);
   const [state, setState] = useState<HearthfolioState | null>(null);
   const [onboarding, setOnboarding] = useState(false);

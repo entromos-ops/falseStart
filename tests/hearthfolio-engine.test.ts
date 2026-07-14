@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   FREE_ENTRY_LIMIT,
+  STORAGE_KEY,
   activitiesCsv,
   activeYear,
   addActivity,
@@ -16,6 +17,7 @@ import {
 } from "@/lib/hearthfolio/engine";
 import {
   LICENSE_GRACE_MS,
+  LICENSE_STORAGE_KEY,
   entitlementWithinGrace,
   parseEntitlement
 } from "@/lib/hearthfolio/license";
@@ -25,7 +27,12 @@ function seeded() {
   return createHousehold("Maya", "Grade 4", new Date("2026-09-01T16:00:00.000Z"));
 }
 
-describe("Hearthfolio record engine", () => {
+describe("Yearkeep record engine", () => {
+  it("keeps legacy browser keys so existing records survive the rebrand", () => {
+    expect(STORAGE_KEY).toBe("hearthfolio:household:v1");
+    expect(LICENSE_STORAGE_KEY).toBe("hearthfolio:license:v1");
+  });
+
   it("creates a private school year with useful defaults", () => {
     const state = seeded();
     const year = activeYear(state);
@@ -176,7 +183,7 @@ describe("Hearthfolio record engine", () => {
     const backup = createBackup(state, new Date("2026-09-10T12:00:00.000Z"));
 
     expect(parseBackup(backup)).toEqual(state);
-    expect(() => parseBackup('{"hello":"world"}')).toThrow("not a Hearthfolio backup");
+    expect(() => parseBackup('{"hello":"world"}')).toThrow("not a Yearkeep backup");
     expect(() => parseBackup("not json")).toThrow("not valid JSON");
   });
 
@@ -201,7 +208,7 @@ describe("Hearthfolio record engine", () => {
         }]
       }
     };
-    expect(() => parseBackup(JSON.stringify(invalidReference))).toThrow("missing required Hearthfolio data");
+    expect(() => parseBackup(JSON.stringify(invalidReference))).toThrow("missing required Yearkeep data");
   });
 
   it("archives the current record when a new school year starts", () => {
@@ -219,7 +226,7 @@ describe("Hearthfolio record engine", () => {
   });
 });
 
-describe("Hearthfolio license state", () => {
+describe("Yearkeep license state", () => {
   const entitlement = {
     key: "example-key",
     instanceId: "instance-1",

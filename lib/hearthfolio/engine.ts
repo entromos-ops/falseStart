@@ -494,10 +494,10 @@ export function parseBackup(json: string): HearthfolioState {
     throw new Error("That file is not valid JSON.");
   }
   if (!isRecord(parsed) || parsed.format !== "hearthfolio-backup") {
-    throw new Error("That is not a Hearthfolio backup.");
+    throw new Error("That is not a Yearkeep backup.");
   }
   const state = parseState(parsed.data);
-  if (!state) throw new Error("That backup is missing required Hearthfolio data.");
+  if (!state) throw new Error("That backup is missing required Yearkeep data.");
   return state;
 }
 

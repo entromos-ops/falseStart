@@ -3,12 +3,12 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const metadataBase = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://false-start.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://homeschool-start.vercel.app"
 );
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "Hearthfolio | Private Homeschool Records in 20 Seconds a Day",
+  title: "Yearkeep | Private Homeschool Records in 20 Seconds a Day",
   description:
     "Log homeschool learning in about 20 seconds and turn ordinary days into a clear learning record and printable portfolio. No account required.",
   keywords: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "homeschool report generator"
   ],
   manifest: "/manifest.webmanifest",
-  applicationName: "Hearthfolio",
+  applicationName: "Yearkeep",
   category: "education",
   alternates: {
     canonical: "/"
@@ -38,10 +38,10 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Hearthfolio"
+    title: "Yearkeep"
   },
   openGraph: {
-    title: "Keep the year. Lose the paperwork. | Hearthfolio",
+    title: "Keep the year. Lose the paperwork. | Yearkeep",
     description:
       "A private homeschool learning log that turns 20-second daily notes into a clear year-end record.",
     type: "website",
@@ -51,13 +51,13 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1536,
         height: 1024,
-        alt: "Hearthfolio private homeschool learning record"
+        alt: "Yearkeep private homeschool learning record"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Keep the year. Lose the paperwork. | Hearthfolio",
+    title: "Keep the year. Lose the paperwork. | Yearkeep",
     description:
       "Private homeschool records in about 20 seconds a day.",
     images: ["/og.png"]

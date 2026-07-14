@@ -1,8 +1,8 @@
-# Hearthfolio launch brief
+# Yearkeep launch brief
 
 ## The bet
 
-Hearthfolio is not a broad homeschool planner. It does one recurring job:
+Yearkeep is not a broad homeschool planner. It does one recurring job:
 
 > Log what happened today in 20 seconds, know whether the year is on track, and print a clean learning record when somebody asks.
 
@@ -40,7 +40,7 @@ Free forever:
 - CSV export;
 - existing records always remain readable.
 
-Hearthfolio Pro — `$12/year` per household:
+Yearkeep Pro — `$12/year` per household:
 
 - unlimited entries;
 - up to six learners;
@@ -110,7 +110,7 @@ Share the free 180-day calendar generator as a standalone planning utility, not 
 - “Plan 180 learning days around your real breaks”
 - “A free homeschool finish-date calculator”
 
-The tool’s final screen can mention Hearthfolio naturally: planning dates is free; keeping the actual record is the product.
+The tool’s final screen can mention Yearkeep naturally: planning dates is free; keeping the actual record is the product.
 
 ### Day 11–14: publish what changed
 

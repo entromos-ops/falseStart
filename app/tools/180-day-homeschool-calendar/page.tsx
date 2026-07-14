@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import CalendarPlanner from "./CalendarPlanner";
 
 export const metadata: Metadata = {
-  title: "Free 180-Day Homeschool Calendar Calculator | Hearthfolio",
+  title: "Free 180-Day Homeschool Calendar Calculator | Yearkeep",
   description:
     "Choose your school weekdays, add vacation breaks, and instantly calculate the projected finish date for a 180-day homeschool year. Free and print-ready.",
   alternates: {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
       "Plan 180 learning days around your real week and family breaks, then print the finished calendar.",
     type: "website",
     url: "/tools/180-day-homeschool-calendar",
-    images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Hearthfolio homeschool record planner" }]
+    images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Yearkeep homeschool record planner" }]
   },
   twitter: {
     card: "summary_large_image",

@@ -1,4 +1,4 @@
-const CACHE = "hearthfolio-shell-v1";
+const CACHE = "yearkeep-shell-v1";
 const SHELL = ["/", "/privacy", "/terms", "/tools/180-day-homeschool-calendar", "/manifest.webmanifest", "/icon"];
 
 self.addEventListener("install", (event) => {

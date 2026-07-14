@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export const dynamic = "force-static";
 
 const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://false-start.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://homeschool-start.vercel.app"
 ).replace(/\/$/, "");
 
 export default function robots(): MetadataRoute.Robots {

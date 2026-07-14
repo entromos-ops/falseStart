@@ -1,14 +1,14 @@
-import HearthfolioApp from "@/components/HearthfolioApp";
+import YearkeepApp from "@/components/HearthfolioApp";
 
 const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://false-start.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://homeschool-start.vercel.app"
 ).replace(/\/$/, "");
 
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "@id": `${siteUrl}/#application`,
-  name: "Hearthfolio",
+  name: "Yearkeep",
   url: siteUrl,
   image: `${siteUrl}/og.png`,
   description:
@@ -28,13 +28,13 @@ const structuredData = {
   offers: [
     {
       "@type": "Offer",
-      name: "Hearthfolio Free",
+      name: "Yearkeep Free",
       price: "0",
       priceCurrency: "USD"
     },
     {
       "@type": "Offer",
-      name: "Hearthfolio Pro annual plan",
+      name: "Yearkeep Pro annual plan",
       price: "12",
       priceCurrency: "USD",
       priceSpecification: {
@@ -56,7 +56,7 @@ export default function Home() {
           __html: JSON.stringify(structuredData).replace(/</g, "\\u003c")
         }}
       />
-      <HearthfolioApp />
+      <YearkeepApp />
     </>
   );
 }

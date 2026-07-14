@@ -1,8 +1,8 @@
-# Hearthfolio
+# Yearkeep
 
-Hearthfolio is a calm, local-first homeschool learning log. A parent can record what happened in about 20 seconds, watch a learning-day target take shape, and turn the year into a printable record.
+Yearkeep is a calm, local-first homeschool learning log. A parent can record what happened in about 20 seconds, watch a learning-day target take shape, and turn the year into a printable record.
 
-The GitHub repository is still named `falseStart`; the product is not.
+The GitHub repository is still named `falseStart`; the product is Yearkeep.
 
 ## What is implemented
 
@@ -22,7 +22,7 @@ The GitHub repository is still named `falseStart`; the product is not.
 
 ## Product boundary
 
-Hearthfolio organizes user-entered records. It does not interpret state law, certify attendance, assess mastery, generate grades, provide curriculum, or promise that a report satisfies a particular authority.
+Yearkeep organizes user-entered records. It does not interpret state law, certify attendance, assess mastery, generate grades, provide curriculum, or promise that a report satisfies a particular authority.
 
 Learning records live in `localStorage`. There is no account, server database, child account, cloud backup, or device sync. Users should download backups regularly.
 
@@ -50,7 +50,7 @@ The Next.js app uses static export and can be hosted on Vercel or another static
 Copy `.env.example` to `.env.local` and set:
 
 ```dotenv
-NEXT_PUBLIC_SITE_URL=https://your-domain.example
+NEXT_PUBLIC_SITE_URL=https://homeschool-start.vercel.app
 NEXT_PUBLIC_SUPPORT_EMAIL=support@your-domain.example
 NEXT_PUBLIC_CHECKOUT_URL=https://your-store.lemonsqueezy.com/buy/...
 NEXT_PUBLIC_LEMON_STORE_ID=123
@@ -71,6 +71,8 @@ The client-side paywall is proportionate for a $12 local utility but is not cryp
 - License storage key: `hearthfolio:license:v1`
 - Backup format marker: `hearthfolio-backup`
 - Schema version: `1`
+
+Those legacy identifiers are intentionally unchanged so same-origin records and old backup files remain compatible after the Yearkeep rebrand. Browser storage does not move between hostnames: export a backup before changing the production origin, then restore it on the new host.
 
 ## Deployment
 

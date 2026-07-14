@@ -4,8 +4,8 @@ export const dynamic = "force-static";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Hearthfolio — Private Homeschool Records",
-    short_name: "Hearthfolio",
+    name: "Yearkeep — Private Homeschool Records",
+    short_name: "Yearkeep",
     description: "Homeschool records in about 20 seconds a day.",
     start_url: "/",
     display: "standalone",
