@@ -1,4 +1,4 @@
-import LumaRealmGame from "@/components/LumaRealmGame";
+import HearthfolioApp from "@/components/HearthfolioApp";
 
 const siteUrl = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://false-start.vercel.app"
@@ -6,63 +6,42 @@ const siteUrl = (
 
 const structuredData = {
   "@context": "https://schema.org",
-  "@graph": [
+  "@type": "SoftwareApplication",
+  "@id": `${siteUrl}/#application`,
+  name: "Hearthfolio",
+  url: siteUrl,
+  image: `${siteUrl}/og.png`,
+  description:
+    "A private, local-first homeschool learning log that turns quick daily notes into a learning-day calendar and printable portfolio.",
+  applicationCategory: "EducationalApplication",
+  applicationSubCategory: "Homeschool record keeping",
+  operatingSystem: "Any",
+  browserRequirements: "Requires a modern web browser with JavaScript enabled",
+  isAccessibleForFree: true,
+  featureList: [
+    "Quick private learning journal",
+    "Learning-day and subject progress",
+    "Live end-of-year report preview",
+    "JSON backup and CSV export",
+    "Records stored in the user's browser"
+  ],
+  offers: [
     {
-      "@type": "VideoGame",
-      "@id": `${siteUrl}/#game`,
-      name: "Luma Village",
-      url: siteUrl,
-      image: `${siteUrl}/og.png`,
-      description:
-        "A cozy role-playing game that begins with a practical Spanish market conversation, then teaches through farming, trading, cooking, and conversations with villagers.",
-      genre: ["Educational game", "Role-playing game", "Life simulation game"],
-      gamePlatform: "Web browser",
-      playMode: "SinglePlayer",
-      inLanguage: ["en", "es"],
-      isAccessibleForFree: true,
-      educationalUse: "Language learning",
-      audience: {
-        "@type": "EducationalAudience",
-        educationalRole: "student"
-      },
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock"
-      },
-      potentialAction: {
-        "@type": "PlayAction",
-        target: `${siteUrl}/?challenge=market`
-      }
+      "@type": "Offer",
+      name: "Hearthfolio Free",
+      price: "0",
+      priceCurrency: "USD"
     },
     {
-      "@type": "SoftwareApplication",
-      "@id": `${siteUrl}/#application`,
-      name: "Luma Village",
-      url: siteUrl,
-      image: `${siteUrl}/og.png`,
-      description:
-        "Learn practical Spanish inside a cozy RPG where understanding the language helps you explore, farm, trade, cook, and complete quests.",
-      applicationCategory: "EducationalApplication",
-      applicationSubCategory: "Language learning game",
-      operatingSystem: "Any",
-      browserRequirements: "Requires a modern web browser with JavaScript enabled",
-      inLanguage: ["en", "es"],
-      isAccessibleForFree: true,
-      featureList: [
-        "A 60-second practical Spanish market challenge",
-        "Practical Spanish in everyday situations",
-        "Adaptive English language support",
-        "Farming, gathering, trading, and cooking quests",
-        "Spanish pronunciation playback",
-        "Progress saved on the player's device"
-      ],
-      offers: {
-        "@type": "Offer",
-        price: "0",
+      "@type": "Offer",
+      name: "Hearthfolio Pro annual plan",
+      price: "12",
+      priceCurrency: "USD",
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        price: "12",
         priceCurrency: "USD",
-        availability: "https://schema.org/InStock"
+        billingDuration: "P1Y"
       }
     }
   ]
@@ -77,7 +56,7 @@ export default function Home() {
           __html: JSON.stringify(structuredData).replace(/</g, "\\u003c")
         }}
       />
-      <LumaRealmGame />
+      <HearthfolioApp />
     </>
   );
 }

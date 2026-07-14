@@ -8,18 +8,18 @@ const metadataBase = new URL(
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "Learn Practical Spanish in a Cozy RPG | Luma Village",
+  title: "Hearthfolio | Private Homeschool Records in 20 Seconds a Day",
   description:
-    "Buy breakfast in Spanish in a 60-second playable conversation, then farm, trade, cook, and explore a cozy language-learning RPG.",
+    "Log homeschool learning in about 20 seconds and turn ordinary days into a clear learning record and printable portfolio. No account required.",
   keywords: [
-    "learn practical Spanish",
-    "Spanish learning game",
-    "cozy language RPG",
-    "Spanish immersion game",
-    "learn Spanish through gameplay"
+    "homeschool record keeping",
+    "homeschool attendance tracker",
+    "homeschool learning log",
+    "homeschool portfolio",
+    "homeschool report generator"
   ],
   manifest: "/manifest.webmanifest",
-  applicationName: "Luma Village",
+  applicationName: "Hearthfolio",
   category: "education",
   alternates: {
     canonical: "/"
@@ -38,12 +38,12 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Luma Village"
+    title: "Hearthfolio"
   },
   openGraph: {
-    title: "Learn Practical Spanish in a Cozy RPG | Luma Village",
+    title: "Keep the year. Lose the paperwork. | Hearthfolio",
     description:
-      "Handle a useful Spanish market conversation, then farm, trade, cook, and explore while the language becomes part of the world.",
+      "A private homeschool learning log that turns 20-second daily notes into a clear year-end record.",
     type: "website",
     url: "/",
     images: [
@@ -51,15 +51,15 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1536,
         height: 1024,
-        alt: "Luma Village open-world language RPG"
+        alt: "Hearthfolio private homeschool learning record"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Learn Practical Spanish in a Cozy RPG | Luma Village",
+    title: "Keep the year. Lose the paperwork. | Hearthfolio",
     description:
-      "Buy breakfast in Spanish, then learn more by living it in a cozy RPG.",
+      "Private homeschool records in about 20 seconds a day.",
     images: ["/og.png"]
   }
 };
@@ -69,8 +69,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#d8b96e" },
-    { media: "(prefers-color-scheme: dark)", color: "#14281f" }
+    { media: "(prefers-color-scheme: light)", color: "#f5f0e7" },
+    { media: "(prefers-color-scheme: dark)", color: "#234334" }
   ]
 };
 

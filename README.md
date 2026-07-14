@@ -1,58 +1,79 @@
-# Luma Village
+# Hearthfolio
 
-Luma Village is a mobile-first Spanish-learning RPG built around useful
-outcomes, not isolated vocabulary drills.
+Hearthfolio is a calm, local-first homeschool learning log. A parent can record what happened in about 20 seconds, watch a learning-day target take shape, and turn the year into a printable record.
 
-New players begin with Market Day, a 60-second conversation in which they greet
-a vendor, request bread, understand the price, choose a quantity, and finish
-naturally. Completing it awards bread inside the open valley, where Spanish is
-part of farming, gathering, trading, cooking, and opening the next road.
+The GitHub repository is still named `falseStart`; the product is not.
 
-The current free first chapter includes:
+## What is implemented
 
-- a five-beat practical market challenge with Spanish audio and optional hints;
-- a shareable real-world capability result;
-- tap-to-move isometric exploration with keyboard controls on desktop;
-- woodcutting, farming, cooking, and trading progression;
-- persistent inventory, tree respawns, timed crops, and world changes;
-- a ten-part quest chain from first greeting to opening the north road;
-- adaptive Spanish support, safe mistakes, a phrasebook, and a capability
-  passport;
-- device-local saves with a rolling backup;
-- responsive controls designed around phones first;
-- privacy-friendly Vercel page analytics and named funnel events;
-- search, social-preview, robots, sitemap, and structured-data metadata.
+- Mobile-first public product page and installable PWA shell
+- One-sentence learning capture with subject, duration, type, date, and optional note
+- Explicit “count this date as a learning day” control
+- Multi-learner activity credits in the data model
+- Today dashboard, searchable journal, subject totals, and learning-day calendar
+- Live end-of-year report preview with browser print/PDF support for Pro
+- Free JSON backup/restore and CSV export
+- Free plan limit that never hides or deletes existing records
+- Lemon Squeezy license activation, validation, seven-day outage grace, and deactivation
+- Vercel Analytics events that do not include learning-record content
+- Privacy and terms pages
+- Offline caching after the first visit
+- Free 180-day calendar calculator with break ranges, monthly totals, and print view
 
-This is intentionally a focused single-player experiment, not an MMO. The
-product question is whether completing one useful Spanish situation earns
-enough interest to enter the world and return.
+## Product boundary
+
+Hearthfolio organizes user-entered records. It does not interpret state law, certify attendance, assess mastery, generate grades, provide curriculum, or promise that a report satisfies a particular authority.
+
+Learning records live in `localStorage`. There is no account, server database, child account, cloud backup, or device sync. Users should download backups regularly.
 
 ## Local development
 
-```bash
+```powershell
 npm install
 npm run dev
 ```
 
 Open `http://127.0.0.1:3000`.
 
-## Scripts
+Verification:
 
-- `npm run dev` starts Next.js locally.
-- `npm run build` creates the static production build in `out/`.
-- `npm run typecheck` runs strict TypeScript checks.
-- `npm test` runs deterministic realm, progression, timer, save, and reward
-  tests.
+```powershell
+npm test
+npm run typecheck
+npm run build
+```
 
-## Architecture
+The Next.js app uses static export and can be hosted on Vercel or another static host.
 
-Next.js and React own the page and Market Day flow. Phaser renders the
-isometric world and handles pointer, keyboard, camera, and movement input. Realm
-rules live in a pure TypeScript state engine so progression can be tested
-independently from the canvas.
+## Checkout and licensing
 
-The app exports as a static site and needs no backend. Vercel deploys it from
-`main`. `NEXT_PUBLIC_SITE_URL` is an optional override for canonical and
-social URLs; the checked-in fallback is the live Vercel origin.
+Copy `.env.example` to `.env.local` and set:
 
-The release and outreach sequence is in [LAUNCH.md](./LAUNCH.md).
+```dotenv
+NEXT_PUBLIC_SITE_URL=https://your-domain.example
+NEXT_PUBLIC_SUPPORT_EMAIL=support@your-domain.example
+NEXT_PUBLIC_CHECKOUT_URL=https://your-store.lemonsqueezy.com/buy/...
+NEXT_PUBLIC_LEMON_STORE_ID=123
+NEXT_PUBLIC_LEMON_PRODUCT_ID=456
+NEXT_PUBLIC_LEMON_VARIANT_ID=789
+NEXT_PUBLIC_CUSTOMER_PORTAL_URL=https://app.lemonsqueezy.com/my-orders/...
+```
+
+Create a `$12/year` recurring Lemon Squeezy product, enable license keys, and allow three activations. The browser calls Lemon’s public License API directly; no Lemon API key belongs in this repository or in `NEXT_PUBLIC_*` variables.
+
+Activation only succeeds when the returned store, product, and variant IDs match the public configuration. A checkout redirect never unlocks Pro by itself.
+
+The client-side paywall is proportionate for a $12 local utility but is not cryptographic DRM. Premium code is delivered to the browser and a determined user can tamper with it.
+
+## Data files
+
+- Household storage key: `hearthfolio:household:v1`
+- License storage key: `hearthfolio:license:v1`
+- Backup format marker: `hearthfolio-backup`
+- Schema version: `1`
+
+## Deployment
+
+`main` is the production branch used by the existing Vercel project. Confirm the Vercel account permits commercial use before enabling paid checkout. Vercel Hobby is for personal, non-commercial use; either use Vercel Pro or deploy the static export to a commercial-friendly host.
+
+See [LAUNCH.md](./LAUNCH.md) for market rationale, activation steps, launch copy, and the validation scorecard.
