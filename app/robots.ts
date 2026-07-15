@@ -10,7 +10,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/"
+      allow: ["/", "/privacy", "/terms"],
+      disallow: ["/api/", "/legacy-yearkeep-export"]
     },
     sitemap: `${siteUrl}/sitemap.xml`,
     host: siteUrl

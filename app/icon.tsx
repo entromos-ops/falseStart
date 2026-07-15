@@ -22,67 +22,54 @@ export default function Icon() {
           position: "relative",
           overflow: "hidden",
           borderRadius: 112,
-          background: "#f5f0e7"
+          background: "#f6f3ed"
         }}
       >
         <div
           style={{
             position: "absolute",
-            width: 348,
-            height: 348,
-            borderRadius: "174px 174px 174px 72px",
-            background: "#315a45",
-            transform: "rotate(-4deg)",
-            boxShadow: "0 28px 70px rgba(36, 51, 42, .22)"
+            width: 364,
+            height: 364,
+            borderRadius: 108,
+            background: "#26756b",
+            boxShadow: "0 30px 72px rgba(24, 51, 47, .22)"
           }}
         />
         <div
           style={{
             position: "absolute",
-            bottom: 124,
-            left: 251,
-            width: 22,
-            height: 210,
-            borderRadius: 20,
-            background: "#f8e9c8",
-            transform: "rotate(3deg)"
+            top: 116,
+            left: 126,
+            width: 226,
+            height: 280,
+            display: "flex",
+            flexDirection: "column",
+            gap: 25,
+            padding: "58px 37px",
+            borderRadius: 30,
+            background: "#ffffff"
           }}
-        />
+        >
+          <div style={{ width: 151, height: 15, borderRadius: 8, background: "#a8cdc7" }} />
+          <div style={{ width: 122, height: 15, borderRadius: 8, background: "#a8cdc7" }} />
+          <div style={{ width: 142, height: 15, borderRadius: 8, background: "#a8cdc7" }} />
+        </div>
         <div
           style={{
             position: "absolute",
-            top: 128,
-            left: 155,
-            width: 116,
-            height: 72,
-            transform: "rotate(22deg)",
-            borderRadius: "90px 8px 90px 8px",
-            background: "#f8e9c8"
+            right: 94,
+            bottom: 89,
+            width: 126,
+            height: 126,
+            border: "9px solid #f6f3ed",
+            borderRadius: 63,
+            background: "#b9633d"
           }}
         />
-        <div
-          style={{
-            position: "absolute",
-            top: 112,
-            right: 146,
-            width: 112,
-            height: 69,
-            transform: "rotate(-18deg)",
-            borderRadius: "8px 90px 8px 90px",
-            background: "#f8e9c8"
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 102,
-            right: 105,
-            width: 62,
-            height: 62,
-            borderRadius: 31,
-            background: "#c78a32"
-          }}
-        />
+        <div style={{ position: "absolute", right: 136, bottom: 109, width: 45, height: 38, borderRadius: "50% 50% 44% 44%", background: "#ffffff" }} />
+        <div style={{ position: "absolute", right: 166, bottom: 151, width: 20, height: 25, borderRadius: 12, transform: "rotate(-25deg)", background: "#ffffff" }} />
+        <div style={{ position: "absolute", right: 139, bottom: 162, width: 20, height: 25, borderRadius: 12, background: "#ffffff" }} />
+        <div style={{ position: "absolute", right: 112, bottom: 151, width: 20, height: 25, borderRadius: 12, transform: "rotate(25deg)", background: "#ffffff" }} />
       </div>
     ),
     size

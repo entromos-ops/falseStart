@@ -1,29 +1,69 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms | Yearkeep",
-  description: "Terms for using Yearkeep's homeschool record-keeping software."
+  title: "Terms",
+  description: "Terms for the Pet Claim Desk private pet insurance claim organizer."
 };
 
 const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL;
 
+function Brand() {
+  return <a href="/" className="brand"><span className="brand-mark" aria-hidden="true"><i /><b /></span><span>Pet Claim Desk</span></a>;
+}
+
 export default function TermsPage() {
   return (
     <main className="legal-page">
-      <nav className="legal-nav"><a href="/" className="brand"><span className="brand-mark"><i /></span><span>Yearkeep</span></a><a href="/">Back to app</a></nav>
+      <nav className="legal-nav"><Brand /><a href="/">Back to app</a></nav>
       <article className="legal-content">
-        <p className="eyebrow">Effective July 14, 2026</p>
-        <h1>Terms of use.</h1>
-        <p>These terms apply when you use Yearkeep. By using the product, you agree to them.</p>
+        <p className="eyebrow">Effective July 15, 2026</p>
+        <h1>Terms for this private beta.</h1>
+        <p>These terms apply when you use Pet Claim Desk. The product is currently an early household tool, not an insurance or veterinary service.</p>
 
-        <section><h2>A record-keeping tool</h2><p>Yearkeep organizes information you enter. It does not provide legal advice, interpret homeschool requirements, certify attendance, assess academic mastery, create official grades, or guarantee that a report will satisfy any authority. Requirements vary. You are responsible for verifying and meeting the rules that apply to your household.</p></section>
-        <section><h2>Your records and backups</h2><p>You are responsible for the accuracy of your entries and for maintaining backups. Browser storage can be cleared or lost. The product is provided without cloud backup or multi-device sync.</p></section>
-        <section><h2>Free and paid use</h2><p>The free plan may limit new entries, learners, archives, and report printing. Existing local records remain readable if a free limit is reached or a paid plan ends. A paid license is for one household and may have a reasonable device activation limit.</p></section>
-        <section><h2>Billing</h2><p>When paid sales are available, the displayed plan renews annually until canceled. The checkout page will identify the merchant of record, taxes, renewal date, cancellation method, and applicable refund terms before purchase. Do not purchase unless those details are acceptable to you.</p></section>
-        <section><h2>Acceptable use</h2><p>Do not misuse the license system, interfere with the product, use it unlawfully, or redistribute paid access. You may export, print, and share reports made from your own household records.</p></section>
-        <section><h2>Availability and warranty</h2><p>Yearkeep is provided “as is” and may change. To the extent allowed by law, we disclaim implied warranties and are not liable for lost records, missed requirements, indirect damages, or decisions made from the software. Nothing here excludes rights that cannot legally be excluded.</p></section>
-        <section><h2>Changes</h2><p>Material changes will be reflected by updating the effective date. Continued use after a change means you accept the revised terms.</p></section>
-        <section><h2>Questions</h2><p>{supportEmail ? <>Email <a href={`mailto:${supportEmail}`}>{supportEmail}</a>.</> : "A support contact will be listed here before paid sales open."}</p></section>
+        <section>
+          <h2>An organizer, not a representative</h2>
+          <p>Pet Claim Desk helps you organize information, prepare files, record communications, and review calculations. It does not sell insurance, provide legal, medical, tax, or insurance advice, determine coverage, diagnose an animal, negotiate a settlement, represent you, or submit a claim unless you personally complete the carrier&apos;s required submission.</p>
+        </section>
+
+        <section>
+          <h2>Verify every submission</h2>
+          <p>Carrier requirements, policy terms, filing windows, appeal windows, deductibles, limits, and reimbursement methods vary and can change. Check the current policy and carrier instructions. Estimates and readiness checks may be incomplete or wrong and are not promises of payment.</p>
+        </section>
+
+        <section>
+          <h2>Your records and authority</h2>
+          <p>You are responsible for the accuracy of information you enter and for confirming that uploaded records belong to the correct pet and claim. Upload only material you own or are authorized to use. Do not alter veterinary records or use the product to mislead a clinic or insurer.</p>
+        </section>
+
+        <section>
+          <h2>Private code and household access</h2>
+          <p>Keep the complete household code confidential. Anyone with it can access and change the encrypted shared workspace. You are responsible for household members you give it to. There is no password-reset or key-recovery service.</p>
+        </section>
+
+        <section>
+          <h2>Storage and backups</h2>
+          <p>Local browser data can be erased and shared storage can be interrupted. Maintain a recent complete backup in a secure place. A downloaded backup can contain unencrypted invoices and veterinary documents, so handle it accordingly.</p>
+        </section>
+
+        <section>
+          <h2>Acceptable use</h2>
+          <p>Do not attempt unauthorized access, upload malware or unlawful material, interfere with the service, probe another household&apos;s workspace, overload the service, or use the product to commit fraud. We may limit access when reasonably necessary to protect users, the service, or its providers.</p>
+        </section>
+
+        <section>
+          <h2>Availability and warranty</h2>
+          <p>The beta is provided &quot;as is&quot; and may change or stop. To the extent allowed by law, we disclaim implied warranties and are not liable for missed deadlines, claim outcomes, lost records, lost private codes, provider outages, or indirect damages. Nothing in these terms limits rights or liability that cannot legally be limited.</p>
+        </section>
+
+        <section>
+          <h2>Changes</h2>
+          <p>We may revise these terms as the product changes. Material updates will be reflected by a new effective date. Stop using the product if revised terms are unacceptable.</p>
+        </section>
+
+        <section>
+          <h2>Questions</h2>
+          <p>{supportEmail ? <>Email <a href={`mailto:${supportEmail}`}>{supportEmail}</a>.</> : "A support contact will be added before access expands beyond the private household beta."}</p>
+        </section>
       </article>
     </main>
   );

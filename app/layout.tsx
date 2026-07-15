@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const metadataBase = new URL(
@@ -8,19 +7,22 @@ const metadataBase = new URL(
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "Yearkeep | Private Homeschool Records in 20 Seconds a Day",
+  title: {
+    default: "Pet Claim Desk | Keep every claim together",
+    template: "%s | Pet Claim Desk"
+  },
   description:
-    "Log homeschool learning in about 20 seconds and turn ordinary days into a clear learning record and printable portfolio. No account required.",
+    "A private household workspace for pet insurance claims, veterinary records, submission evidence, deadlines, and reimbursements.",
   keywords: [
-    "homeschool record keeping",
-    "homeschool attendance tracker",
-    "homeschool learning log",
-    "homeschool portfolio",
-    "homeschool report generator"
+    "pet insurance claim tracker",
+    "pet insurance documents",
+    "veterinary invoice organizer",
+    "pet insurance reimbursement",
+    "pet medical records organizer"
   ],
   manifest: "/manifest.webmanifest",
-  applicationName: "Yearkeep",
-  category: "education",
+  applicationName: "Pet Claim Desk",
+  category: "productivity",
   alternates: {
     canonical: "/"
   },
@@ -38,28 +40,21 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Yearkeep"
+    title: "Claim Desk"
   },
   openGraph: {
-    title: "Keep the year. Lose the paperwork. | Yearkeep",
+    title: "Keep every pet insurance claim together | Pet Claim Desk",
     description:
-      "A private homeschool learning log that turns 20-second daily notes into a clear year-end record.",
+      "Organize visits, records, claim packets, deadlines, and reimbursements in one private household workspace.",
     type: "website",
     url: "/",
-    images: [
-      {
-        url: "/og.png",
-        width: 1536,
-        height: 1024,
-        alt: "Yearkeep private homeschool learning record"
-      }
-    ]
+    images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Pet Claim Desk — Keep every claim together." }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Keep the year. Lose the paperwork. | Yearkeep",
+    title: "Keep every pet insurance claim together | Pet Claim Desk",
     description:
-      "Private homeschool records in about 20 seconds a day.",
+      "A private household workspace for pet insurance claims and supporting records.",
     images: ["/og.png"]
   }
 };
@@ -69,8 +64,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f0e7" },
-    { media: "(prefers-color-scheme: dark)", color: "#234334" }
+    { media: "(prefers-color-scheme: light)", color: "#f6f3ed" },
+    { media: "(prefers-color-scheme: dark)", color: "#18332f" }
   ]
 };
 
@@ -81,10 +76,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-        <Analytics />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
