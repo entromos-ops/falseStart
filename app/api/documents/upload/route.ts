@@ -1,4 +1,5 @@
-import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
+import { issueSignedToken } from "@vercel/blob";
+import { handleUploadPresigned, type HandleUploadPresignedBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import {
   blobConfigured,
@@ -12,13 +13,13 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function POST(request: Request): Promise<NextResponse> {
-  if (!blobConfigured()) return NextResponse.json({ error: "Private document storage is not connected yet." }, { status: 503 });
-  const body = await request.json() as HandleUploadBody;
+  if (!blobConfigured(request)) return NextResponse.json({ error: "Private document storage is not connected yet." }, { status: 503 });
+  const body = await request.json() as HandleUploadPresignedBody;
   try {
-    const response = await handleUpload({
+    const response = await handleUploadPresigned({
       body,
       request,
-      onBeforeGenerateToken: async (pathname, clientPayload) => {
+      getSignedToken: async (pathname, clientPayload) => {
         if (!clientPayload) throw new Error("Household upload authorization is missing.");
         const parsed = JSON.parse(clientPayload) as {
           workspaceId?: string;
@@ -30,15 +31,25 @@ export async function POST(request: Request): Promise<NextResponse> {
         const envelope = await readWorkspaceEnvelope(workspaceId);
         if (!envelope || !parsed.authToken || !verifyAuthToken(envelope, parsed.authToken)) throw new Error("Household access was denied.");
         if (!parsed.documentId || !pathname.endsWith(`/${parsed.documentId}.bin`)) throw new Error("Invalid document upload.");
+        // Web Crypto appends a 16-byte AES-GCM authentication tag to the encrypted file.
+        const maximumSizeInBytes = 50 * 1024 * 1024 + 16;
+        const validUntil = Date.now() + 60 * 60 * 1000;
         return {
-          allowedContentTypes: ["application/octet-stream"],
-          maximumSizeInBytes: 50 * 1024 * 1024,
-          addRandomSuffix: false,
-          tokenPayload: JSON.stringify({ workspaceId, documentId: parsed.documentId })
+          token: await issueSignedToken({
+            pathname,
+            operations: ["put"],
+            allowedContentTypes: ["application/octet-stream"],
+            maximumSizeInBytes,
+            validUntil
+          }),
+          urlOptions: {
+            allowedContentTypes: ["application/octet-stream"],
+            maximumSizeInBytes,
+            validUntil,
+            addRandomSuffix: false,
+            allowOverwrite: false
+          }
         };
-      },
-      onUploadCompleted: async () => {
-        // Metadata is committed by the encrypted household sync after the client receives the blob path.
       }
     });
     return NextResponse.json(response);

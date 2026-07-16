@@ -12,10 +12,14 @@ export interface WorkspaceEnvelope {
   };
 }
 
-export function blobConfigured(): boolean {
-  return Boolean(
-    process.env.BLOB_READ_WRITE_TOKEN ||
-    (process.env.BLOB_STORE_ID && process.env.VERCEL_OIDC_TOKEN)
+function hasCredential(value: string | null | undefined): boolean {
+  return Boolean(value?.trim());
+}
+
+export function blobConfigured(request?: Request): boolean {
+  const oidcToken = request?.headers.get("x-vercel-oidc-token") ?? process.env.VERCEL_OIDC_TOKEN;
+  return hasCredential(process.env.BLOB_READ_WRITE_TOKEN) || (
+    hasCredential(process.env.BLOB_STORE_ID) && hasCredential(oidcToken)
   );
 }
 

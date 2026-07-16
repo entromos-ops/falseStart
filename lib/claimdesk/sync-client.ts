@@ -1,6 +1,6 @@
 "use client";
 
-import { upload } from "@vercel/blob/client";
+import { uploadPresigned } from "@vercel/blob/client";
 import { decryptDocument, decryptJson, deriveAuthToken, encryptDocument, encryptJson } from "./crypto";
 import { parseState } from "./engine";
 import type { ClaimDeskState, LocalSession } from "./types";
@@ -74,7 +74,7 @@ export async function uploadCloudDocument(
   const authToken = await deriveAuthToken(session.rootSecret);
   const { encrypted, iv } = await encryptDocument(file, session.rootSecret);
   const pathname = `workspaces/${session.workspaceId}/documents/${documentId}.bin`;
-  const result = await upload(pathname, encrypted, {
+  const result = await uploadPresigned(pathname, encrypted, {
     access: "private",
     handleUploadUrl: "/api/documents/upload",
     clientPayload: JSON.stringify({

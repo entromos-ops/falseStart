@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
-  if (!blobConfigured()) return NextResponse.json({ error: "Private document storage is not connected yet." }, { status: 503 });
+  if (!blobConfigured(request)) return NextResponse.json({ error: "Private document storage is not connected yet." }, { status: 503 });
   try {
     const workspaceId = validateWorkspaceId(request.nextUrl.searchParams.get("workspaceId") ?? "");
     const pathname = validateDocumentPath(workspaceId, request.nextUrl.searchParams.get("pathname") ?? "");
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
   }
 }
 export async function DELETE(request: Request) {
-  if (!blobConfigured()) return NextResponse.json({ error: "Private document storage is not connected yet." }, { status: 503 });
+  if (!blobConfigured(request)) return NextResponse.json({ error: "Private document storage is not connected yet." }, { status: 503 });
   try {
     const body = await request.json() as { workspaceId?: string; pathname?: string };
     const workspaceId = validateWorkspaceId(body.workspaceId ?? "");

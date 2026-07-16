@@ -25,7 +25,7 @@ function errorResponse(error: unknown, status = 400) {
 }
 
 export async function GET(request: Request, context: RouteContext) {
-  if (!blobConfigured()) return errorResponse(new Error("Private household storage is not connected yet."), 503);
+  if (!blobConfigured(request)) return errorResponse(new Error("Private household storage is not connected yet."), 503);
   try {
     const { workspaceId: rawId } = await context.params;
     const workspaceId = validateWorkspaceId(rawId);
@@ -42,7 +42,7 @@ export async function GET(request: Request, context: RouteContext) {
 }
 
 export async function PUT(request: Request, context: RouteContext) {
-  if (!blobConfigured()) return errorResponse(new Error("Private household storage is not connected yet."), 503);
+  if (!blobConfigured(request)) return errorResponse(new Error("Private household storage is not connected yet."), 503);
   try {
     const { workspaceId: rawId } = await context.params;
     const workspaceId = validateWorkspaceId(rawId);
