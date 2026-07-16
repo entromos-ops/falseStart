@@ -1,5 +1,5 @@
 {
-  "name": "pet-claim-desk",
+  "name": "spotgrid",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -10,8 +10,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@vercel/blob": "^2.6.1",
-    "jszip": "^3.10.1",
     "next": "15.5.19",
     "react": "19.1.0",
     "react-dom": "19.1.0"

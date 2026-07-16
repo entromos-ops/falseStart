@@ -8,21 +8,21 @@ const metadataBase = new URL(
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Pet Claim Desk | Keep every claim together",
-    template: "%s | Pet Claim Desk"
+    default: "SpotGrid | Host-read ad inventory for podcast networks",
+    template: "%s | SpotGrid"
   },
   description:
-    "A private household workspace for pet insurance claims, veterinary records, submission evidence, deadlines, and reimbursements.",
+    "A lightweight inventory board for podcast networks selling baked-in host-read sponsorships across shows and episodes.",
   keywords: [
-    "pet insurance claim tracker",
-    "pet insurance documents",
-    "veterinary invoice organizer",
-    "pet insurance reimbursement",
-    "pet medical records organizer"
+    "podcast ad inventory",
+    "host-read podcast ads",
+    "podcast sponsorship tracker",
+    "baked-in podcast ads",
+    "podcast network sales"
   ],
   manifest: "/manifest.webmanifest",
-  applicationName: "Pet Claim Desk",
-  category: "productivity",
+  applicationName: "SpotGrid",
+  category: "business",
   alternates: {
     canonical: "/"
   },
@@ -40,22 +40,20 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Claim Desk"
+    title: "SpotGrid"
   },
   openGraph: {
-    title: "Keep every pet insurance claim together | Pet Claim Desk",
+    title: "SpotGrid | Host-read ad inventory for podcast networks",
     description:
-      "Organize visits, records, claim packets, deadlines, and reimbursements in one private household workspace.",
+      "Track sold, held, and open host-read spots without changing podcast hosts or buying an enterprise ad server.",
     type: "website",
-    url: "/",
-    images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Pet Claim Desk — Keep every claim together." }]
+    url: "/"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Keep every pet insurance claim together | Pet Claim Desk",
+    title: "SpotGrid | Host-read ad inventory for podcast networks",
     description:
-      "A private household workspace for pet insurance claims and supporting records.",
-    images: ["/og.png"]
+      "A narrow inventory board for baked-in podcast sponsorships."
   }
 };
 
@@ -64,8 +62,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f3ed" },
-    { media: "(prefers-color-scheme: dark)", color: "#18332f" }
+    { media: "(prefers-color-scheme: light)", color: "#f4f5f2" },
+    { media: "(prefers-color-scheme: dark)", color: "#202421" }
   ]
 };
 
