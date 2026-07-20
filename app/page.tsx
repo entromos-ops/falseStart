@@ -1,42 +1,25 @@
-import SpotGridApp from "@/components/SpotGridApp";
+"use client";
 
-const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://homeschool-start.vercel.app"
-).replace(/\/$/, "");
+import { FormEvent, useState } from "react";
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "@id": `${siteUrl}/#application`,
-  name: "SpotGrid",
-  url: siteUrl,
-  description:
-    "A lightweight inventory board for podcast networks selling baked-in host-read sponsorships across shows and episodes.",
-  applicationCategory: "BusinessApplication",
-  applicationSubCategory: "Podcast advertising inventory management",
-  operatingSystem: "Any",
-  browserRequirements: "Requires a modern web browser with JavaScript enabled",
-  isAccessibleForFree: true,
-  featureList: [
-    "Show and episode inventory",
-    "Pre-roll, mid-roll, and post-roll availability",
-    "Sponsor category conflict checks",
-    "Brief-to-invoice production pipeline",
-    "Advertiser delivery reports",
-    "CSV import and export"
-  ]
-};
+const examples = [
+  ["Appliance", "Broken latch, redesigned", "A small failure no longer means replacing the whole assembly."],
+  ["Maintenance", "Hard-to-source mounting clip", "A durable replacement made to fit the job at hand."],
+  ["Home", "Missing knob & bracket", "Useful little fixes for the things you use every day."],
+];
 
 export default function Home() {
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c")
-        }}
-      />
-      <SpotGridApp />
-    </>
-  );
+  const [submitted, setSubmitted] = useState(false);
+  function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setSubmitted(true); }
+  return <>
+    <header><a className="brand" href="#top"><i>P</i>Part<span>Patch</span></a><nav><a href="#how">How it works</a><a href="#examples">Examples</a><a href="#teams">For maintenance teams</a><a className="navButton" href="#quote">Request a part</a></nav></header>
+    <main id="top">
+      <section className="hero"><div className="heroCopy"><p className="eyebrow">CUSTOM 3D-PRINTED REPLACEMENTS</p><h1>That tiny broken part shouldn&apos;t cost you the <em>whole assembly.</em></h1><p className="lede">Send the original part whenever you can—it gives us the best shot at a perfect fit. Photos or a link to the item are a great place to start, too.</p><div className="actions"><a className="button" href="#quote">Request a replacement <b>→</b></a><a className="textLink" href="#how">See how it works ↓</a></div><p className="micro">Local pickup and small-batch orders. Quotes before we make anything.</p></div><div className="heroArt"><div className="grid"/><div className="part"><span/><i/><i/><i/></div><p className="fit">— &nbsp; Made to fit</p><p className="built">— &nbsp; Built for use</p></div></section>
+      <section className="trust">THE FIX YOU NEED, WITHOUT THE WASTE YOU DON&apos;T.<div><span>▣ Custom fit</span><span>✦ Small batches</span><span>◌ Clear quotes</span><span>↗ Local first</span></div></section>
+      <section id="how" className="section"><p className="eyebrow">SIMPLE FROM START TO FINISH</p><h2>Broken part. Better plan.</h2><div className="steps"><article><b>01</b><h3>Show us the problem</h3><p>Sending the broken part gives us the best fit. If you can&apos;t, photos, dimensions, or a link to the item are a great start.</p></article><article><b>02</b><h3>We design the fix</h3><p>We measure, model, and improve the part where it makes sense—then send you a clear quote.</p></article><article><b>03</b><h3>Pick up & get back to it</h3><p>Your custom replacement is printed in the right material for the job and ready for local pickup.</p></article></div></section>
+      <section id="examples" className="examples section"><p className="eyebrow">THE LITTLE THINGS ADD UP</p><h2>Made for the parts nobody sells separately.</h2><div className="cards">{examples.map(([tag,title,copy], index)=><article key={title}><div className={`model model${index}`}><i/></div><p>{tag}</p><h3>{title}</h3><span>{copy}</span></article>)}</div></section>
+      <section id="teams" className="teams"><div><p className="eyebrow">FOR PROPERTY & MAINTENANCE TEAMS</p><h2>Keep a simple repair from turning into an expensive replacement.</h2></div><p>When a tiny plastic component breaks, buying a whole kit—or replacing the entire unit—can waste time and budget. PartPatch creates practical, repeatable replacement parts for the things your team runs into again and again.<br/><a className="textLink" href="#quote">Ask about a recurring part →</a></p></section>
+      <section id="quote" className="quote section"><div><p className="eyebrow">THE ORIGINAL PART IS BEST</p><h2>Let&apos;s figure out your replacement.</h2><p>Sending us the broken part gives us the best chance of a precise, reliable fit. If you can&apos;t send it, photos and a link to the item it came from help us get started.</p><aside><strong>A quick note on fit & safety</strong><br/>We don&apos;t make parts for safety-critical, electrical, plumbing-pressure, fire-protection, security, or medical uses.</aside></div><form onSubmit={submit}>{submitted?<div className="success"><b>✓</b><h3>Request received.</h3><p>For this prototype, your details stay on this device. The live version will send your request directly to PartPatch.</p><button type="button" onClick={()=>setSubmitted(false)}>Send another request</button></div>:<><label>Your name<input required placeholder="Jane Smith"/></label><label>Email or phone<input required placeholder="you@example.com"/></label><label>Link to the item<input type="url" placeholder="Store page, manufacturer page, or product listing"/></label><label>What part do you need?<textarea required placeholder="What broke? What does it belong to? Any measurements or details you know?"/></label><label className="upload">Add photos <small>Or send the actual broken part for the best fit</small><input type="file" accept="image/*"/></label><button className="button" type="submit">Request a quote →</button><small>No obligation. We&apos;ll confirm what&apos;s possible before any work begins.</small></>}</form></section>
+    </main><footer><a className="brand" href="#top"><i>P</i>Part<span>Patch</span></a><p>Custom 3D-printed replacement parts.</p></footer>
+  </>;
 }
